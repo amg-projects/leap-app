@@ -1,13 +1,15 @@
+import Link from "next/link"
+
 export function NavBar() {
     return (
         <div className="h-12 bg-green-900">
-            BARRA DE NAVEGACAO - atualizada 123123123123
+            <Link href="/onchain-poc">Onchain POC</Link>
         </div>
     )
 }
 
-export function Outracois () {
+export function Outracois() {
     return (<>
-    OUTRA COISA
+        OUTRA COISA
     </>)
 }
