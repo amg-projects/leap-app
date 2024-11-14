@@ -52,23 +52,11 @@ function AfilliateRecomendations() {
 
 function FourVideosGrid() {
   return (
-    <div className="flex flex-1 flex-col p-4">
-      <div className="flex flex-1 ">
-        <div className="flex flex-1 p-4">
-          <GreyVideoPreview />
-        </div>
-        <div className="flex flex-1 p-4">
-          <GreyVideoPreview />
-        </div>
-      </div>
-      <div className="flex flex-1 ">
-        <div className="flex flex-1 p-4">
-          <GreyVideoPreview />
-        </div>
-        <div className="flex flex-1 p-4">
-          <GreyVideoPreview />
-        </div>
-      </div>
+    <div className="grid flex-1 grid-flow-col grid-rows-2 flex-col gap-4 p-4">
+      <GreyVideoPreview />
+      <GreyVideoPreview />
+      <GreyVideoPreview />
+      <GreyVideoPreview />
     </div>
   )
 }
