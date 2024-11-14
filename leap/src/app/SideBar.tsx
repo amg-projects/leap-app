@@ -1,21 +1,12 @@
-const profiles = [
-  'Joao',
-  'Maria',
-  'Jose',
-  'Ana',
-  'Pedro',
-  'Paulo',
-  'Lucas',
-  'Marcos',
-  'Lucia',
-  'Marta',
-]
+const profiles: string[] = []
 
 export function SideBar() {
   return (
-    <div className="w-40 bg-blue-900">
-      {profiles.map((profile) => (
-        <div className="border border-black bg-red-900">{profile}</div>
+    <div className="min-w-56 bg-[#d9d9d9]">
+      {profiles.map((profile, idx) => (
+        <div key={idx} className="text-black">
+          {profile}
+        </div>
       ))}
     </div>
   )

@@ -1,9 +1,5 @@
 export function NavBar() {
-  return (
-    <div className="h-12 bg-green-900">
-      BARRA DE NAVEGACAO - atualizada 123123123123
-    </div>
-  )
+  return <div className="min-h-16 bg-[#d9d9d9]"></div>
 }
 
 export function Outracois() {
