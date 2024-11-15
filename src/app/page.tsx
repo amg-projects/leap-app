@@ -63,8 +63,9 @@ function FourVideosGrid() {
 }
 
 function VideoPreview() {
+  console.log('VideoPreview render')
   return (
-    <div className="aspect-video flex-1 rounded-2xl bg-[#d9d9d9]">
+    <div className="aspect-video flex-1 overflow-hidden rounded-2xl bg-[#d9d9d9]">
       <WebRTCPlayer streamId="not-implemented" />
     </div>
   )
