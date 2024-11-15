@@ -1,3 +1,4 @@
+import { WebRTCPlayer } from '@/components/WebRTCPlayer'
 import { NavBar } from './NavBar'
 import { SideBar } from './SideBar'
 
@@ -40,7 +41,7 @@ function AfilliateRecomendations() {
       </div>
       <div className="flex flex-1 items-center">
         <div className="h-fit flex-1">
-          <GreyVideoPreview />
+          <VideoPreview />
         </div>
       </div>
       <div className="flex-1">
@@ -53,16 +54,20 @@ function AfilliateRecomendations() {
 function FourVideosGrid() {
   return (
     <div className="grid flex-1 grid-flow-col grid-rows-2 flex-col gap-4 p-4">
-      <GreyVideoPreview />
-      <GreyVideoPreview />
-      <GreyVideoPreview />
-      <GreyVideoPreview />
+      <VideoPreview />
+      <VideoPreview />
+      <VideoPreview />
+      <VideoPreview />
     </div>
   )
 }
 
-function GreyVideoPreview() {
-  return <div className="aspect-video flex-1 rounded-2xl bg-[#d9d9d9]"></div>
+function VideoPreview() {
+  return (
+    <div className="aspect-video flex-1 rounded-2xl bg-[#d9d9d9]">
+      <WebRTCPlayer streamId="not-implemented" />
+    </div>
+  )
 }
 
 function CategoryRecomendations({ category }: { category: string }) {
@@ -73,7 +78,7 @@ function CategoryRecomendations({ category }: { category: string }) {
   // eslint-disable-next-line prefer-spread
   const videos = Array.apply(null, Array(VIDEO_COUNT)).map((_, idx) => (
     <div className="p-4" key={idx}>
-      <GreyVideoPreview />
+      <VideoPreview />
     </div>
   ))
 
