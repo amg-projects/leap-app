@@ -2,35 +2,21 @@
 
 // Credits: https://github.com/Glimesh/broadcast-box/blob/main/web/src/components/player/index.js
 import dynamic from 'next/dynamic'
-import { createRef, useEffect, useState } from 'react'
+import { createRef, useEffect, useRef, useState } from 'react'
 
+const whepAPIUrl = 'http://localhost:8000/whep'
 export const WebRTCPlayer = dynamic(() => Promise.resolve(WebRTCPlayerImpl), {
   ssr: false,
 })
 
-function WebRTCPlayerImpl({
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  streamId,
-  whepAPIUrl = 'http://localhost:8000/whep',
-}: {
-  streamId: string
-  whepAPIUrl?: string
-}) {
-  const videoRef = createRef<HTMLVideoElement>()
-  const [mediaSrcObject, setMediaSrcObject] = useState<MediaStream | null>(null)
-
-  useEffect(() => {
-    if (videoRef.current) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      ;(videoRef.current as any).srcObject = mediaSrcObject
-    }
-  }, [mediaSrcObject, videoRef])
+function useRTCVideo(streamId: string) {
+  const [mediaStream, setMediaStream] = useState<MediaStream | null>(null)
 
   useEffect(() => {
     const peerConnection = new RTCPeerConnection()
 
     peerConnection.ontrack = function (event) {
-      setMediaSrcObject(event.streams[0])
+      setMediaStream(event.streams[0])
     }
 
     peerConnection.addTransceiver('audio', { direction: 'recvonly' })
@@ -58,8 +44,21 @@ function WebRTCPlayerImpl({
     return function cleanup() {
       peerConnection.close()
     }
-  }, [whepAPIUrl])
+  }, [streamId])
 
+  return { mediaStream }
+}
+
+function WebRTCPlayerImpl({ streamId }: { streamId: string }) {
+  const { mediaStream } = useRTCVideo(streamId)
+  const videoRef = createRef<HTMLVideoElement>()
+
+  useEffect(() => {
+    if (videoRef.current) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      ;(videoRef.current as any).srcObject = mediaStream
+    }
+  }, [videoRef, mediaStream])
   return (
     <>
       <video ref={videoRef} autoPlay className={`w-full bg-black`} />
