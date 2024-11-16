@@ -2,21 +2,36 @@
 
 // Credits: https://github.com/Glimesh/broadcast-box/blob/main/web/src/components/player/index.js
 import dynamic from 'next/dynamic'
-import { createRef, useEffect, useRef, useState } from 'react'
+import { createRef, useEffect, useState } from 'react'
 
-const whepAPIUrl = 'http://localhost:8000/whep'
+const whepAPIUrl = 'http://localhost:8080/whep'
+// const whepAPIUrl = 'https://leap-webrtc.fly.dev/whep'
+
 export const WebRTCPlayer = dynamic(() => Promise.resolve(WebRTCPlayerImpl), {
   ssr: false,
 })
+
+const peerConnectionCache = new Map<string, RTCPeerConnection>()
 
 function useRTCVideo(streamId: string) {
   const [mediaStream, setMediaStream] = useState<MediaStream | null>(null)
 
   useEffect(() => {
-    const peerConnection = new RTCPeerConnection()
+    const firstTime = !peerConnectionCache.has(streamId)
+    const peerConnection =
+      peerConnectionCache.get(streamId) || new RTCPeerConnection()
+    peerConnectionCache.set(streamId, peerConnection)
 
+    const oldOnTrack = peerConnection.ontrack
     peerConnection.ontrack = function (event) {
       setMediaStream(event.streams[0])
+      if (oldOnTrack) {
+        oldOnTrack(event)
+      }
+    }
+
+    if (!firstTime) {
+      return
     }
 
     peerConnection.addTransceiver('audio', { direction: 'recvonly' })
@@ -41,8 +56,9 @@ function useRTCVideo(streamId: string) {
       })
     })
 
-    return function cleanup() {
+    return () => {
       peerConnection.close()
+      peerConnectionCache.delete(streamId)
     }
   }, [streamId])
 
