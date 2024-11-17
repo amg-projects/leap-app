@@ -13,7 +13,8 @@ export default function Home() {
       <NavBar />
       <div className="flex flex-1 flex-row">
         <SideBar />
-        <Recomendations />
+        <FourVideosGrid />
+        {/* <Recomendations /> */}
       </div>
     </div>
   )
