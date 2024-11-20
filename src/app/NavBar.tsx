@@ -1,11 +1,15 @@
 export function NavBar() {
   return (
-    <div className="flex flex-row bg-[#d9d9d9] text-black">
-      <div className="m-3 size-8 rounded-xl bg-[#676767]"></div>
-      <div className="m-3 ml-5 h-8 w-24 rounded-2xl bg-[#676767]"></div>
-      <div className="m-3 ml-80 h-8 w-[630px] rounded-2xl bg-[#676767]"></div>
-      <div className="m-3 ml-36 mt-4 h-6 w-24 rounded-2xl bg-[#676767]"></div>
-      <div className="m-3 ml-20 h-8 w-24 rounded-2xl bg-[#676767]"></div>
+    <div className="flex flex-row items-center bg-[#d9d9d9] py-3 text-black">
+      <div className="flex flex-1 flex-row">
+        <div className="ml-3 size-8 flex-none rounded-xl bg-[#676767]"></div>
+        <div className="ml-10 h-8 w-24 flex-none rounded-2xl bg-[#676767]"></div>
+      </div>
+      <div className=" hidden h-8 w-[200px] flex-auto rounded-2xl bg-[#676767] lg:flex"></div>
+      <div className="flex flex-1 flex-row items-center justify-end">
+        <div className="mr-6 h-6 w-24 flex-none rounded-2xl bg-[#676767] lg:mr-7 xl:mr-9 2xl:mr-20"></div>
+        <div className="mr-10 h-8 w-24 flex-none rounded-2xl bg-[#676767]"></div>
+      </div>
     </div>
   )
 }
