@@ -1,3 +1,6 @@
+'use client'
+
+import { useState } from 'react'
 import { NavBar } from './NavBar'
 import { SideBar } from './SideBar'
 import { VideoPreview } from './VideoPreview'
@@ -5,14 +8,15 @@ import { VideoPreview } from './VideoPreview'
 // TODO: Próximos passos
 // NavBar Sticky
 // Títulos de categorias
-// Página da live
 
 export default function Home() {
+  const [sideBarExpadend, setSideBarExpanded] = useState(true)
+
   return (
     <div className="flex min-h-screen flex-col border border-purple-700">
-      <NavBar />
+      <NavBar onSideBarToggle={() => setSideBarExpanded(!sideBarExpadend)} />
       <div className="flex flex-1 flex-row">
-        <SideBar expanded={true} />
+        <SideBar expanded={sideBarExpadend} />
         <Recomendations />
       </div>
     </div>

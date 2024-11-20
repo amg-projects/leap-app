@@ -1,27 +1,14 @@
-'use client'
-import { useState } from 'react'
-
 export function SideBar({ expanded }: { expanded: boolean }) {
-  const sideBarWidthCollapsed = 'min-w-10'
-  const sideBarWidthExpanded = 'min-w-56'
-
-  const [sideBar, setSideBar] = useState(false)
-  const sideBarWidth = sideBar ? sideBarWidthExpanded : sideBarWidthCollapsed
-  return (
-    <>
-      <button onClick={() => setSideBar(!sideBar)}>a</button>
-      {sideBar.toString()}
-      {sideBar ? (
-        <ExpandedSideBarContent sideBarWidth={sideBarWidth} />
-      ) : (
-        <CollapsedSideBarContent sideBarWidth={sideBarWidth} />
-      )}
-    </>
-  )
+  if (expanded) {
+    return <ExpandedSideBarContent />
+  } else {
+    return <CollapsedSideBarContent />
+  }
 }
-function CollapsedSideBarContent({ sideBarWidth }: { sideBarWidth: string }) {
+
+function CollapsedSideBarContent() {
   return (
-    <div className={`bg-[#d9d9d9] ${sideBarWidth} flex flex-col text-black `}>
+    <div className="flex min-w-10 flex-col bg-[#d9d9d9] text-black">
       <div className="flex flex-col">
         <ChannelExample12 collapsed={true} />
       </div>
@@ -31,22 +18,22 @@ function CollapsedSideBarContent({ sideBarWidth }: { sideBarWidth: string }) {
     </div>
   )
 }
-function ExpandedSideBarContent({ sideBarWidth }: { sideBarWidth: string }) {
+
+function ExpandedSideBarContent() {
   return (
-    <div className={`bg-[#d9d9d9] ${sideBarWidth} flex flex-col text-black `}>
-      {/* <button onClick={() => setSideBar(!sideBar)}>a</button> */}
-      {/* {sideBar.toString()} */}
+    <div className="flex min-w-56 flex-col bg-[#d9d9d9] text-black">
       <div className="flex flex-col">
         <div>FOLLOWED CHANNELS</div>
         <ChannelExample12 collapsed={false} />
       </div>
       <div className="mt-20 flex flex-col">
-        RECOMMENDED CHANNELS
+        <div>RECOMMENDED CHANNELS</div>
         <ChannelExample12 collapsed={false} />
       </div>
     </div>
   )
 }
+
 function ChannelExample12({ collapsed }: { collapsed: boolean }) {
   return (
     <>
