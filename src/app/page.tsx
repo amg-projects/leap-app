@@ -5,7 +5,6 @@ import { VideoPreview } from './VideoPreview'
 // TODO: Próximos passos
 // NavBar Sticky
 // Títulos de categorias
-// Página da live
 
 export default function Home() {
   return (
@@ -35,8 +34,8 @@ function Recomendations() {
 
 function AfilliateRecomendations() {
   return (
-    <div className="flex min-h-80 grid-flow-col grid-rows-1">
-      <div className="flex-1">
+    <div className="flex grid-flow-col grid-rows-1">
+      <div className="flex flex-1 items-center">
         <FourVideosGrid />
       </div>
       <div className="flex flex-1 items-center">
@@ -44,7 +43,7 @@ function AfilliateRecomendations() {
           <VideoPreview />
         </div>
       </div>
-      <div className="flex-1">
+      <div className="flex flex-1 items-center">
         <FourVideosGrid />
       </div>
     </div>
@@ -53,7 +52,7 @@ function AfilliateRecomendations() {
 
 function FourVideosGrid() {
   return (
-    <div className="grid flex-1 grid-flow-col grid-rows-2 flex-col gap-4 p-4">
+    <div className="grid flex-1 grid-flow-col grid-rows-2 flex-col gap-1 p-2 lg:gap-4 lg:p-4">
       <VideoPreview />
       <VideoPreview />
       <VideoPreview />
@@ -69,15 +68,13 @@ function CategoryRecomendations({ category }: { category: string }) {
 
   // eslint-disable-next-line prefer-spread
   const videos = Array.apply(null, Array(VIDEO_COUNT)).map((_, idx) => (
-    <div className="p-4" key={idx}>
-      <VideoPreview />
-    </div>
+    <VideoPreview key={idx} />
   ))
 
   return (
-    <div className="flex min-h-80 flex-col">
+    <div className="flex flex-col">
       <h1>{category}</h1>
-      <div className="grid flex-1 grid-flow-col grid-rows-2 px-24">
+      <div className="grid flex-1 grid-flow-col grid-rows-2 items-center gap-2 px-12 lg:px-24">
         {videos}
       </div>
     </div>
