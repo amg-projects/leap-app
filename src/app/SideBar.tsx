@@ -1,5 +1,9 @@
-export function SideBar({ expanded }: { expanded: boolean }) {
-  if (expanded) {
+type ExpandedProps = {
+  expanded: boolean
+}
+
+export function SideBar(props: ExpandedProps) {
+  if (props.expanded) {
     return <ExpandedSideBarContent />
   } else {
     return <CollapsedSideBarContent />
@@ -10,10 +14,10 @@ function CollapsedSideBarContent() {
   return (
     <div className="flex min-w-10 flex-col bg-[#d9d9d9] text-black">
       <div className="flex flex-col">
-        <ChannelExample12 collapsed={true} />
+        <ChannelExample12 expanded={false} />
       </div>
       <div className="mt-20 flex flex-col">
-        <ChannelExample12 collapsed={true} />
+        <ChannelExample12 expanded={false} />
       </div>
     </div>
   )
@@ -24,37 +28,37 @@ function ExpandedSideBarContent() {
     <div className="flex min-w-56 flex-col bg-[#d9d9d9] text-black">
       <div className="flex flex-col">
         <div>FOLLOWED CHANNELS</div>
-        <ChannelExample12 collapsed={false} />
+        <ChannelExample12 expanded={true} />
       </div>
       <div className="mt-20 flex flex-col">
         <div>RECOMMENDED CHANNELS</div>
-        <ChannelExample12 collapsed={false} />
+        <ChannelExample12 expanded={true} />
       </div>
     </div>
   )
 }
 
-function ChannelExample12({ collapsed }: { collapsed: boolean }) {
+function ChannelExample12(props: ExpandedProps) {
   return (
     <>
-      <ChannelExample collapsed={collapsed} />
-      <ChannelExample collapsed={collapsed} />
-      <ChannelExample collapsed={collapsed} />
-      <ChannelExample collapsed={collapsed} />
-      <ChannelExample collapsed={collapsed} />
-      <ChannelExample collapsed={collapsed} />
-      <ChannelExample collapsed={collapsed} />
-      <ChannelExample collapsed={collapsed} />
-      <ChannelExample collapsed={collapsed} />
-      <ChannelExample collapsed={collapsed} />
-      <ChannelExample collapsed={collapsed} />
-      <ChannelExample collapsed={collapsed} />
+      <ChannelExample expanded={props.expanded} />
+      <ChannelExample expanded={props.expanded} />
+      <ChannelExample expanded={props.expanded} />
+      <ChannelExample expanded={props.expanded} />
+      <ChannelExample expanded={props.expanded} />
+      <ChannelExample expanded={props.expanded} />
+      <ChannelExample expanded={props.expanded} />
+      <ChannelExample expanded={props.expanded} />
+      <ChannelExample expanded={props.expanded} />
+      <ChannelExample expanded={props.expanded} />
+      <ChannelExample expanded={props.expanded} />
+      <ChannelExample expanded={props.expanded} />
     </>
   )
 }
 
-function ChannelExample({ collapsed }: { collapsed: boolean }) {
-  const className = collapsed ? 'hidden' : ''
+function ChannelExample(props: ExpandedProps) {
+  const className = props.expanded ? '' : 'hidden'
   return (
     <div className="flex flex-row items-center border border-black">
       <div className="m-1 size-8 rounded-full bg-black"></div>
