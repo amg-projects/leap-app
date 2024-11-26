@@ -4,7 +4,7 @@
 import dynamic from 'next/dynamic'
 import { createRef, useEffect, useState } from 'react'
 
-const whepAPIUrl = 'http://localhost:8080/whep'
+const whepAPIUrl = 'http://[2804:14d:7e81:8a8f:b255:3176:a2d2:c21b]:6060/whep'
 // const whepAPIUrl = 'https://leap-webrtc.fly.dev/whep'
 
 export const WebRTCPlayer = dynamic(() => Promise.resolve(WebRTCPlayerImpl), {
@@ -48,12 +48,17 @@ function useRTCVideo(streamId: string) {
           Authorization: `Bearer none`,
           'Content-Type': 'application/sdp',
         },
-      }).then(async (response) => {
-        peerConnection.setRemoteDescription({
-          sdp: await response.text(),
-          type: 'answer',
-        })
       })
+        .then(async (response) => {
+          peerConnection.setRemoteDescription({
+            sdp: await response.text(),
+            type: 'answer',
+          })
+        })
+        .catch((err) => {
+          console.dir(err)
+          alert(err)
+        })
     })
 
     return () => {
@@ -75,6 +80,14 @@ function WebRTCPlayerImpl({ streamId }: { streamId: string }) {
       ;(videoRef.current as any).srcObject = mediaStream
     }
   }, [videoRef, mediaStream])
+
+  // useEffect(() => {
+  //   const intervalId = setInterval(() => {
+  //     window.location.reload(true); // Forces a hard reload
+  //   }, 20000);
+
+  //   return () => clearInterval(intervalId); // Cleanup interval on component unmount
+  // }, []);
   return (
     <>
       <video ref={videoRef} autoPlay muted className={`w-full bg-black`} />
