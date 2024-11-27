@@ -1,6 +1,6 @@
 export function NavBar({ onSideBarToggle }: { onSideBarToggle: () => void }) {
   return (
-    <div className="flex flex-row items-center  bg-[#e6f1ea]  py-3 text-black drop-shadow-md">
+    <div className="flex flex-row items-center  bg-white py-3 text-black  drop-shadow-md">
       <div className="flex flex-1 flex-row">
         <div
           className="ml-3 size-8 flex-none rounded-xl bg-[#676767]"

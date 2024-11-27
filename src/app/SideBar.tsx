@@ -3,36 +3,21 @@ type SideBarProps = {
 }
 
 export function SideBar(props: SideBarProps) {
-  if (props.expanded) {
-    return <ExpandedSideBarContent />
-  } else {
-    return <CollapsedSideBarContent />
-  }
-}
-
-function CollapsedSideBarContent() {
   return (
-    <div className="flex min-w-10 flex-col bg-[#e6f1ea]  text-black">
-      <div className="flex flex-col">
-        <ChannelExampleN expanded={false} exampleCount={12} />
-      </div>
-      <div className="mt-20 flex flex-col">
-        <ChannelExampleN expanded={false} exampleCount={12} />
-      </div>
-    </div>
-  )
-}
-
-function ExpandedSideBarContent() {
-  return (
-    <div className="flex min-w-56 flex-col bg-[#e6f1ea]  text-black">
-      <div className="flex flex-col">
-        <div>FOLLOWED CHANNELS</div>
-        <ChannelExampleN expanded={true} exampleCount={12} />
-      </div>
-      <div className="mt-20 flex flex-col">
-        <div>RECOMMENDED CHANNELS</div>
-        <ChannelExampleN expanded={true} exampleCount={12} />
+    <div className="z-10 shadow-[0_35px_60px_-15px_rgba(0,0,0,1)] transition duration-500 ease-in">
+      <div className="flex flex-col bg-white text-black">
+        <div className="flex flex-col">
+          <div className={props.expanded ? '' : 'hidden'}>
+            FOLLOWED CHANNELS
+          </div>
+          <ChannelExampleN expanded={props.expanded} exampleCount={12} />
+        </div>
+        <div className="mt-20 flex flex-col">
+          <div className={props.expanded ? '' : 'hidden'}>
+            RECOMMENDED CHANNELS
+          </div>
+          <ChannelExampleN expanded={props.expanded} exampleCount={12} />
+        </div>
       </div>
     </div>
   )
