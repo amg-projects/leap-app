@@ -44,7 +44,7 @@ function LiveDetails() {
 function ChannelImage() {
   return (
     <div className="p-4">
-      <div className="size-24 rounded-full bg-[#d9d9d9]"></div>
+      <div className="size-24 rounded-full bg-[#F0FFF5]"></div>
     </div>
   )
 }
@@ -75,13 +75,13 @@ function DescriptionSection() {
 function ButtonsSection() {
   return (
     <div className="flex gap-2 ">
-      <div className="size-10 rounded-full bg-[#d9d9d9] p-1 text-center text-white"></div>
-      <div className="size-10 rounded-full bg-[#d9d9d9] p-1 text-center text-white"></div>
-      <div className="h-10 w-28 rounded-2xl bg-[#d9d9d9] p-1 px-2 text-center text-white"></div>
+      <div className="size-10 rounded-full bg-[#F0FFF5] p-1 text-center text-white"></div>
+      <div className="size-10 rounded-full bg-[#F0FFF5] p-1 text-center text-white"></div>
+      <div className="h-10 w-28 rounded-2xl bg-[#F0FFF5] p-1 px-2 text-center text-white"></div>
     </div>
   )
 }
 
 function RightSide() {
-  return <div className="mb-10 max-w-96 flex-1 rounded-2xl bg-[#d9d9d9]"></div>
+  return <div className="mb-10 max-w-96 flex-1 rounded-2xl bg-[#F0FFF5]"></div>
 }

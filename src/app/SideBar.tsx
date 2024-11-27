@@ -12,7 +12,7 @@ export function SideBar(props: SideBarProps) {
 
 function CollapsedSideBarContent() {
   return (
-    <div className="flex min-w-10 flex-col bg-[#d9d9d9] text-black">
+    <div className="flex min-w-10 flex-col bg-[#e6f1ea]  text-black">
       <div className="flex flex-col">
         <ChannelExampleN expanded={false} exampleCount={12} />
       </div>
@@ -25,7 +25,7 @@ function CollapsedSideBarContent() {
 
 function ExpandedSideBarContent() {
   return (
-    <div className="flex min-w-56 flex-col bg-[#d9d9d9] text-black">
+    <div className="flex min-w-56 flex-col bg-[#e6f1ea]  text-black">
       <div className="flex flex-col">
         <div>FOLLOWED CHANNELS</div>
         <ChannelExampleN expanded={true} exampleCount={12} />

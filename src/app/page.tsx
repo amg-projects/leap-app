@@ -13,7 +13,7 @@ export default function Home() {
   const [sideBarExpadend, setSideBarExpanded] = useState(true)
 
   return (
-    <div className="flex min-h-screen flex-col border border-purple-700">
+    <div className="flex min-h-screen flex-col">
       <NavBar onSideBarToggle={() => setSideBarExpanded(!sideBarExpadend)} />
       <div className="flex flex-1 flex-row">
         <SideBar expanded={sideBarExpadend} />
