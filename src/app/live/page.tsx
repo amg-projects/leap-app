@@ -16,7 +16,7 @@ export default function Page() {
 
 function LivePageContent() {
   return (
-    <div className="flex flex-1 gap-9 bg-white pl-9 pr-16 pt-8">
+    <div className="flex flex-1 gap-9 bg-[#F0FFF5] pl-9 pr-16 pt-8">
       <LeftSide />
       <RightSide />
     </div>
