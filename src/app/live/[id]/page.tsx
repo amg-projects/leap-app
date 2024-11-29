@@ -1,42 +1,49 @@
-import { NavBar } from '../NavBar'
-import { SideBar } from '../SideBar'
-import { VideoPreview } from '../VideoPreview'
+'use client'
 
-export default function Page() {
+import { use, useState } from 'react'
+import { NavBar } from '../../NavBar'
+import { SideBar } from '../../SideBar'
+import { VideoPreview } from '../../VideoPreview'
+
+export default function Page({ params }: { params: Promise<{ id: string }> }) {
+  const [sideBarExpadend, setSideBarExpanded] = useState(true)
+
+  const { id } = use(params)
+
   return (
-    <div className="flex min-h-screen flex-col border border-purple-700">
-      <NavBar />
+    <div className="flex min-h-screen flex-col">
+      <NavBar onSideBarToggle={() => setSideBarExpanded(!sideBarExpadend)} />
       <div className="flex flex-1 flex-row">
-        <SideBar expanded={false} />
-        <LivePageContent />
+        <SideBar expanded={sideBarExpadend} />
+        <LivePageContent id={id} />
       </div>
     </div>
   )
 }
 
-function LivePageContent() {
+function LivePageContent({ id }: { id: string }) {
   return (
     <div className="flex flex-1 gap-9 bg-[#F0FFF5] pl-9 pr-16 pt-8">
-      <LeftSide />
+      <LeftSide id={id} />
       <RightSide />
     </div>
   )
 }
 
-function LeftSide() {
+function LeftSide({ id }: { id: string }) {
   return (
     <div className="flex flex-1 flex-col">
       <VideoPreview className="" />
-      <LiveDetails />
+      <LiveDetails id={id} />
     </div>
   )
 }
 
-function LiveDetails() {
+function LiveDetails({ id }: { id: string }) {
   return (
     <div className="flex">
       <ChannelImage />
-      <LiveDetailsText />
+      <LiveDetailsText id={id} />
     </div>
   )
 }
@@ -49,10 +56,10 @@ function ChannelImage() {
   )
 }
 
-function LiveDetailsText() {
+function LiveDetailsText({ id }: { id: string }) {
   return (
     <div className="flex w-full flex-col gap-2 pt-6 text-black">
-      <div className="text-xl font-bold">marucs</div>
+      <div className="text-xl font-bold">Channel ID = {id}</div>
       <div className="flex justify-between gap-2 pr-4">
         <DescriptionSection />
         <ButtonsSection />

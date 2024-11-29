@@ -1,3 +1,5 @@
+import { accessHome } from './actions'
+
 export function NavBar({ onSideBarToggle }: { onSideBarToggle: () => void }) {
   return (
     <div className="flex flex-row items-center  bg-white py-3 text-black  drop-shadow-md">
@@ -8,7 +10,10 @@ export function NavBar({ onSideBarToggle }: { onSideBarToggle: () => void }) {
         >
           Expand
         </div>
-        <div className="ml-10 h-8 w-24 flex-none rounded-2xl bg-[#676767]">
+        <div
+          className="ml-10 h-8 w-24 flex-none rounded-2xl bg-[#676767]"
+          onClick={() => accessHome()}
+        >
           Logo
         </div>
       </div>

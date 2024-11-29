@@ -1,3 +1,7 @@
+'use client'
+
+import { accessLive } from './actions'
+
 type SideBarProps = {
   expanded: boolean
 }
@@ -36,6 +40,7 @@ function ChannelExampleN(props: MultipleChannelsProps) {
     channels.push(
       <ChannelExample
         key={lastID}
+        id={lastID}
         expanded={props.expanded}
         name={'Channel Name' + lastID++}
         liveCount="1.2k"
@@ -49,6 +54,7 @@ function ChannelExampleN(props: MultipleChannelsProps) {
 
 type ChannelExampleProps = {
   expanded: boolean
+  id: number
   name: string
   liveCount: string
   category: string
@@ -57,7 +63,12 @@ type ChannelExampleProps = {
 function ChannelExample(props: ChannelExampleProps) {
   const className = props.expanded ? '' : 'hidden'
   return (
-    <div className="flex flex-row items-center ">
+    <div
+      className="flex flex-row items-center"
+      onClick={() => {
+        accessLive(props.id)
+      }}
+    >
       <div className="m-1 size-8 rounded-full bg-black"></div>
       <div className={`ml-1 flex-1 ${className}`}>
         <div className="flex flex-row items-center">
