@@ -13,10 +13,12 @@ export default function Home() {
   const [sideBarExpadend, setSideBarExpanded] = useState(true)
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex h-screen flex-col overflow-hidden">
       <NavBar onSideBarToggle={() => setSideBarExpanded(!sideBarExpadend)} />
-      <div className="flex flex-1 flex-row">
-        <SideBar expanded={sideBarExpadend} />
+      <div className="flex h-screen flex-1 flex-row">
+        <div className="flex flex-col overflow-auto">
+          <SideBar expanded={sideBarExpadend} />
+        </div>
         <Recomendations />
       </div>
     </div>
@@ -25,14 +27,14 @@ export default function Home() {
 
 function Recomendations() {
   return (
-    <div className="flex-1 bg-white pt-20 text-black ">
+    <div className="flex-1 overflow-auto bg-white pt-20 text-black">
       <AfilliateRecomendations />
       <hr className="my-4" />
-      <CategoryRecomendations category="youwilllike" />
+      <CategoryRecomendations category="You will like" />
       <hr className="my-4" />
-      <CategoryRecomendations category="fps" />
+      <CategoryRecomendations category="FPS" />
       <hr className="my-4" />
-      <CategoryRecomendations category="irl" />
+      <CategoryRecomendations category="IRL" />
     </div>
   )
 }
@@ -77,9 +79,9 @@ function CategoryRecomendations({ category }: { category: string }) {
   ))
 
   return (
-    <div className="flex flex-col">
-      <h1>{category}</h1>
-      <div className="grid flex-1 grid-flow-col grid-rows-2 items-center gap-2 px-12 lg:px-24">
+    <div className="flex flex-col px-12 lg:px-24">
+      <h1 className="font-bold ">{category}</h1>
+      <div className="grid flex-1 grid-flow-col grid-rows-2 items-center gap-5 ">
         {videos}
       </div>
     </div>

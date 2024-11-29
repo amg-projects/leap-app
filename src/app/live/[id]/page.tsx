@@ -11,11 +11,15 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params)
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex h-screen flex-col overflow-hidden">
       <NavBar onSideBarToggle={() => setSideBarExpanded(!sideBarExpadend)} />
-      <div className="flex flex-1 flex-row">
-        <SideBar expanded={sideBarExpadend} />
-        <LivePageContent id={id} />
+      <div className="flex h-screen flex-1 flex-row">
+        <div className="flex flex-col overflow-auto">
+          <SideBar expanded={sideBarExpadend} />
+        </div>
+        <div className="flex flex-1 flex-col overflow-auto">
+          <LivePageContent id={id} />
+        </div>
       </div>
     </div>
   )
@@ -43,7 +47,9 @@ function LiveDetails({ id }: { id: string }) {
   return (
     <div className="flex">
       <ChannelImage />
-      <LiveDetailsText id={id} />
+      <div className="flex flex-col">
+        <LiveDetailsText id={id} />
+      </div>
     </div>
   )
 }
@@ -51,7 +57,7 @@ function LiveDetails({ id }: { id: string }) {
 function ChannelImage() {
   return (
     <div className="p-4">
-      <div className="size-24 rounded-full bg-[#F0FFF5]"></div>
+      <div className="size-24 rounded-full bg-[#000000]"></div>
     </div>
   )
 }
@@ -90,5 +96,5 @@ function ButtonsSection() {
 }
 
 function RightSide() {
-  return <div className="mb-10 max-w-96 flex-1 rounded-2xl bg-[#F0FFF5]"></div>
+  return <div className="mb-32 max-w-96 flex-1 rounded-2xl bg-[#c7d6cc]"></div>
 }
