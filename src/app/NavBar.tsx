@@ -40,8 +40,12 @@ function Logo() {
 
 function SearchBar() {
   return (
-    <div className="hidden h-8 w-[200px] flex-auto overflow-hidden text-clip rounded-2xl bg-[#F0FFF5] text-white lg:flex">
-      <input type="text" className="w-full bg-transparent px-4 text-black" />
+    <div className="hidden h-8 w-[200px] flex-auto overflow-hidden text-clip rounded-2xl border border-[#00000028] bg-[#F0FFF5] text-white lg:flex">
+      <input
+        type="text"
+        placeholder="Search on Leap"
+        className="w-full rounded-l-full bg-transparent px-4 text-black"
+      />
       <div className="w-10 bg-[#00000017] pt-1 text-center">🔍</div>
     </div>
   )
