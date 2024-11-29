@@ -1,3 +1,6 @@
+'use client'
+
+import { useState } from 'react'
 import { NavBar } from './NavBar'
 import { SideBar } from './SideBar'
 import { VideoPreview } from './VideoPreview'
@@ -7,11 +10,13 @@ import { VideoPreview } from './VideoPreview'
 // Títulos de categorias
 
 export default function Home() {
+  const [sideBarExpadend, setSideBarExpanded] = useState(true)
+
   return (
-    <div className="flex min-h-screen flex-col border border-purple-700">
-      <NavBar />
+    <div className="flex min-h-screen flex-col">
+      <NavBar onSideBarToggle={() => setSideBarExpanded(!sideBarExpadend)} />
       <div className="flex flex-1 flex-row">
-        <SideBar expanded={true} />
+        <SideBar expanded={sideBarExpadend} />
         <Recomendations />
       </div>
     </div>
@@ -20,7 +25,7 @@ export default function Home() {
 
 function Recomendations() {
   return (
-    <div className="flex-1 bg-white pt-20 text-black">
+    <div className="flex-1 bg-white pt-20 text-black ">
       <AfilliateRecomendations />
       <hr className="my-4" />
       <CategoryRecomendations category="youwilllike" />
