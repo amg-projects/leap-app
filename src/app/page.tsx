@@ -12,7 +12,7 @@ export default function Home() {
     <div className="flex min-h-screen flex-col border border-purple-700">
       <NavBar />
       <div className="flex flex-1 flex-row">
-        <SideBar />
+        {/* <SideBar /> */}
         <FourVideosGrid />
         {/* <Recomendations /> */}
       </div>
@@ -54,10 +54,7 @@ function AfilliateRecomendations() {
 
 function FourVideosGrid() {
   return (
-    <div className="grid flex-1 grid-flow-col grid-rows-2 flex-col gap-4 p-4">
-      <VideoPreview />
-      <VideoPreview />
-      <VideoPreview />
+    <div className="grid flex-1 grid-flow-col grid-rows-1 flex-col gap-4 p-4">
       <VideoPreview />
     </div>
   )
