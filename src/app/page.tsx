@@ -1,20 +1,19 @@
-import { WebRTCPlayer } from '@/components/WebRTCPlayer'
+'use client'
+
+import { useState } from 'react'
 import { NavBar } from './NavBar'
 import { SideBar } from './SideBar'
-
-// TODO: Próximos passos
-// NavBar Sticky
-// Títulos de categorias
-// Página da live
+import { VideoPreview } from './VideoPreview'
 
 export default function Home() {
+  const [sideBarExpadend, setSideBarExpanded] = useState(true)
+
   return (
-    <div className="flex min-h-screen flex-col border border-purple-700">
-      <NavBar />
+    <div className="flex min-h-screen flex-col">
+      <NavBar onSideBarToggle={() => setSideBarExpanded(!sideBarExpadend)} />
       <div className="flex flex-1 flex-row">
-        {/* <SideBar /> */}
-        <FourVideosGrid />
-        {/* <Recomendations /> */}
+        <SideBar expanded={sideBarExpadend} />
+        <Recomendations />
       </div>
     </div>
   )
@@ -22,7 +21,7 @@ export default function Home() {
 
 function Recomendations() {
   return (
-    <div className="flex-1 bg-white pt-20 text-black">
+    <div className="flex-1 bg-white pt-20 text-black ">
       <AfilliateRecomendations />
       <hr className="my-4" />
       <CategoryRecomendations category="youwilllike" />
@@ -36,8 +35,8 @@ function Recomendations() {
 
 function AfilliateRecomendations() {
   return (
-    <div className="flex min-h-80 grid-flow-col grid-rows-1">
-      <div className="flex-1">
+    <div className="flex grid-flow-col grid-rows-1">
+      <div className="flex flex-1 items-center">
         <FourVideosGrid />
       </div>
       <div className="flex flex-1 items-center">
@@ -45,7 +44,7 @@ function AfilliateRecomendations() {
           <VideoPreview />
         </div>
       </div>
-      <div className="flex-1">
+      <div className="flex flex-1 items-center">
         <FourVideosGrid />
       </div>
     </div>
@@ -54,17 +53,11 @@ function AfilliateRecomendations() {
 
 function FourVideosGrid() {
   return (
-    <div className="grid flex-1 grid-flow-col grid-rows-1 flex-col gap-4 p-4">
+    <div className="grid flex-1 grid-flow-col grid-rows-2 flex-col gap-1 p-2 lg:gap-4 lg:p-4">
       <VideoPreview />
-    </div>
-  )
-}
-
-function VideoPreview() {
-  console.log('VideoPreview render')
-  return (
-    <div className="aspect-video flex-1 overflow-hidden rounded-2xl bg-[#d9d9d9]">
-      <WebRTCPlayer streamId="not-implemented" />
+      <VideoPreview />
+      <VideoPreview />
+      <VideoPreview />
     </div>
   )
 }
@@ -76,15 +69,13 @@ function CategoryRecomendations({ category }: { category: string }) {
 
   // eslint-disable-next-line prefer-spread
   const videos = Array.apply(null, Array(VIDEO_COUNT)).map((_, idx) => (
-    <div className="p-4" key={idx}>
-      <VideoPreview />
-    </div>
+    <VideoPreview key={idx} />
   ))
 
   return (
-    <div className="flex min-h-80 flex-col">
+    <div className="flex flex-col">
       <h1>{category}</h1>
-      <div className="grid flex-1 grid-flow-col grid-rows-2 px-24">
+      <div className="grid flex-1 grid-flow-col grid-rows-2 items-center gap-2 px-12 lg:px-24">
         {videos}
       </div>
     </div>
