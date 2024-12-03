@@ -27,7 +27,7 @@ export default function Home() {
 
 function Recomendations() {
   return (
-    <div className="flex-1 overflow-auto bg-white pt-20 text-black">
+    <div className="flex-1 overflow-auto bg-background pt-20 text-black">
       <AfilliateRecomendations />
       <hr className="my-4" />
       <CategoryRecomendations category="You will like" />

@@ -100,7 +100,13 @@ function WebRTCPlayerImpl({ streamId }: { streamId: string }) {
 
   return (
     <>
-      <video ref={videoRef} autoPlay muted className={`w-full bg-black`} />
+      <video
+        ref={videoRef}
+        controls
+        autoPlay
+        muted
+        className={`w-full bg-black`}
+      />
     </>
   )
 }

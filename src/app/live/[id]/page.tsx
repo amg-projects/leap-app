@@ -27,7 +27,7 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
 
 function LivePageContent({ id }: { id: string }) {
   return (
-    <div className="flex flex-1 gap-9 bg-[#F0FFF5] pl-9 pr-16 pt-8">
+    <div className="flex flex-1 gap-9 bg-background pl-9 pr-16 pt-8 shadow-inner ">
       <LeftSide id={id} />
       <RightSide />
     </div>
@@ -57,14 +57,14 @@ function LiveDetails({ id }: { id: string }) {
 function ChannelImage() {
   return (
     <div className="p-4">
-      <div className="size-24 rounded-full bg-[#000000]"></div>
+      <div className="size-24 rounded-full bg-foreground"></div>
     </div>
   )
 }
 
 function LiveDetailsText({ id }: { id: string }) {
   return (
-    <div className="flex w-full flex-col gap-2 pt-6 text-black">
+    <div className="flex w-full flex-col gap-2 pt-6 text-foreground">
       <div className="text-xl font-bold">Channel ID = {id}</div>
       <div className="flex justify-between gap-2 pr-4">
         <DescriptionSection />
@@ -88,13 +88,13 @@ function DescriptionSection() {
 function ButtonsSection() {
   return (
     <div className="flex gap-2 ">
-      <div className="size-10 rounded-full bg-[#F0FFF5] p-1 text-center text-white"></div>
-      <div className="size-10 rounded-full bg-[#F0FFF5] p-1 text-center text-white"></div>
-      <div className="h-10 w-28 rounded-2xl bg-[#F0FFF5] p-1 px-2 text-center text-white"></div>
+      <div className="size-10 rounded-full bg-accent-foreground p-1 text-center text-foreground"></div>
+      <div className="size-10 rounded-full bg-accent-foreground p-1 text-center text-foreground"></div>
+      <div className="h-10 w-28 rounded-2xl bg-accent-foreground p-1 px-2 text-center text-foreground"></div>
     </div>
   )
 }
 
 function RightSide() {
-  return <div className="mb-32 max-w-96 flex-1 rounded-2xl bg-[#c7d6cc]"></div>
+  return <div className="mb-32 max-w-96 flex-1 rounded-2xl bg-secondary"></div>
 }
