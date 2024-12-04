@@ -5,10 +5,6 @@ import { NavBar } from './NavBar'
 import { SideBar } from './SideBar'
 import { VideoPreview } from './VideoPreview'
 
-// TODO: Próximos passos
-// NavBar Sticky
-// Títulos de categorias
-
 export default function Home() {
   const [sideBarExpadend, setSideBarExpanded] = useState(true)
 
