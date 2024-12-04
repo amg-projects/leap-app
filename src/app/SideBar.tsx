@@ -1,22 +1,37 @@
+'use client'
+
+import { accessLive } from './actions'
+
 type SideBarProps = {
   expanded: boolean
 }
 
 export function SideBar(props: SideBarProps) {
   return (
-    <div className="z-10 shadow-[0_35px_60px_-15px_rgba(0,0,0,1)] transition duration-500 ease-in">
-      <div className="flex flex-col bg-white text-black">
-        <div className="flex flex-col">
-          <div className={props.expanded ? '' : 'hidden'}>
-            FOLLOWED CHANNELS
+    <div className="z-10 flex min-w-14 flex-1 flex-col items-center bg-white shadow-[10px_-10px_10px_-10px_rgba(0,0,0,0.2)]">
+      <div className="flex flex-col gap-5 text-black">
+        <div className="flex flex-col pt-5">
+          <div
+            className={`mb-2 ${props.expanded ? '' : 'hidden'} px-2 text-left font-bold`}
+          >
+            FOLLOWED
           </div>
-          <ChannelExampleN expanded={props.expanded} exampleCount={12} />
+          <div className="flex flex-col gap-1">
+            <ChannelExampleN expanded={props.expanded} exampleCount={12} />
+          </div>
         </div>
-        <div className="mt-20 flex flex-col">
-          <div className={props.expanded ? '' : 'hidden'}>
-            RECOMMENDED CHANNELS
+
+        <div className="h-1 border-b-2" />
+
+        <div className="flex flex-col">
+          <div
+            className={`mb-2 ${props.expanded ? '' : 'hidden'} px-2 text-left font-bold`}
+          >
+            RECOMMENDED
           </div>
-          <ChannelExampleN expanded={props.expanded} exampleCount={12} />
+          <div className="flex flex-col gap-1">
+            <ChannelExampleN expanded={props.expanded} exampleCount={12} />
+          </div>
         </div>
       </div>
     </div>
@@ -36,8 +51,9 @@ function ChannelExampleN(props: MultipleChannelsProps) {
     channels.push(
       <ChannelExample
         key={lastID}
+        id={lastID}
         expanded={props.expanded}
-        name={'Channel Name' + lastID++}
+        name={'Channel Name ' + lastID++}
         liveCount="1.2k"
         category="Just Chatting"
       />,
@@ -49,6 +65,7 @@ function ChannelExampleN(props: MultipleChannelsProps) {
 
 type ChannelExampleProps = {
   expanded: boolean
+  id: number
   name: string
   liveCount: string
   category: string
@@ -57,7 +74,12 @@ type ChannelExampleProps = {
 function ChannelExample(props: ChannelExampleProps) {
   const className = props.expanded ? '' : 'hidden'
   return (
-    <div className="flex flex-row items-center ">
+    <div
+      className="flex cursor-pointer flex-row items-center hover:scale-[1.01] hover:bg-gray-100 hover:shadow-lg"
+      onClick={() => {
+        accessLive(props.id)
+      }}
+    >
       <div className="m-1 size-8 rounded-full bg-black"></div>
       <div className={`ml-1 flex-1 ${className}`}>
         <div className="flex flex-row items-center">
