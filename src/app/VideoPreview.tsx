@@ -8,7 +8,7 @@ export function VideoPreview({ className }: { className?: string }) {
       <div
         className={`aspect-video overflow-hidden rounded-2xl bg-[#c7d6cc] shadow-lg dark:bg-background`}
       >
-        <WebRTCPlayer streamId="not-implemented" />
+        <WebRTCPlayer />
       </div>
     </AspectRatio>
   )

@@ -2,8 +2,13 @@
 
 import * as React from 'react'
 import { ThemeProvider as NextThemesProvider } from 'next-themes'
+import dynamic from 'next/dynamic'
 
-export function ThemeProvider({
+export const ThemeProvider = dynamic(() => Promise.resolve(ThemeProviderImpl), {
+  ssr: false,
+})
+
+function ThemeProviderImpl({
   children,
   ...props
 }: React.ComponentProps<typeof NextThemesProvider>) {
