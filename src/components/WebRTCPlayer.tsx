@@ -4,7 +4,7 @@
 import dynamic from 'next/dynamic'
 import React, { useEffect, useState } from 'react'
 
-export const WebRTCPlayer = dynamic(() => Promise.resolve(PlayerPage), {
+export const WebRTCPlayer = dynamic(() => Promise.resolve(WebRTCPlayerImpl), {
   ssr: false,
 })
 
@@ -21,19 +21,11 @@ const pcConfig: RTCConfiguration = {
   ],
 }
 
-function PlayerPage(): JSX.Element {
-  return (
-    <div className={`container mx-auto flex flex-col items-center p-2`}>
-      <Player cinemaMode={false} />
-    </div>
-  )
-}
-
-interface PlayerProps {
-  cinemaMode: boolean
-}
-
-function Player({ cinemaMode }: PlayerProps): JSX.Element {
+function WebRTCPlayerImpl({
+  livestreamID,
+}: {
+  livestreamID: string
+}): JSX.Element {
   const videoRef = React.createRef<HTMLVideoElement>()
   const [videoLayers] = useState<string[]>([])
   const [mediaSrcObject, setMediaSrcObject] = useState<MediaStream | null>(null)
@@ -77,7 +69,7 @@ function Player({ cinemaMode }: PlayerProps): JSX.Element {
       offer.sdp = offer.sdp.replace('useinbandfec=1', 'useinbandfec=1;stereo=1')
       peerConnection.setLocalDescription(offer)
 
-      fetch('/whep', {
+      fetch(`/api/whep/${livestreamID}`, {
         method: 'POST',
         body: offer.sdp,
         headers: {
@@ -85,7 +77,7 @@ function Player({ cinemaMode }: PlayerProps): JSX.Element {
           'Content-Type': 'application/sdp',
         },
       })
-        .then((r) => {
+        .then(async (r) => {
           // const parsedLinkHeader = parseLinkHeader(r.headers.get('Link') || '')
           // setLayerEndpoint(
           //   `${window.location.protocol}//${parsedLinkHeader['urn:ietf:params:whep:ext:core:layer'].url}`,
@@ -102,13 +94,20 @@ function Player({ cinemaMode }: PlayerProps): JSX.Element {
           //   setVideoLayers(parsed['1'].layers.map((l: any) => l.encodingId))
           // })
 
-          return r.text()
+          const answer = await r.text()
+          if (!r.status.toString().startsWith('2')) {
+            throw new Error(`Server error: ${r.status}: ${answer}`)
+          }
+          return answer
         })
         .then((answer) => {
           peerConnection.setRemoteDescription({
             sdp: answer,
             type: 'answer',
           })
+        })
+        .catch((e) => {
+          console.error(e)
         })
     })
 
@@ -125,15 +124,7 @@ function Player({ cinemaMode }: PlayerProps): JSX.Element {
         muted
         controls
         playsInline
-        className={`w-full bg-black ${cinemaMode && 'h-full'}`}
-        style={
-          cinemaMode
-            ? {
-                maxHeight: '100vh',
-                maxWidth: '100vw',
-              }
-            : {}
-        }
+        className={`w-full bg-black`}
       />
 
       {videoLayers.length >= 2 && (
@@ -155,5 +146,3 @@ function Player({ cinemaMode }: PlayerProps): JSX.Element {
     </>
   )
 }
-
-export default PlayerPage

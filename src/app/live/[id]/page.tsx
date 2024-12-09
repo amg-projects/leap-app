@@ -3,7 +3,8 @@
 import { use, useState } from 'react'
 import { NavBar } from '../../NavBar'
 import { SideBar } from '../../SideBar'
-import { VideoPreview } from '../../VideoPreview'
+import { AspectRatio } from '@/components/ui/aspect-ratio'
+import { WebRTCPlayer } from '@/components/WebRTCPlayer'
 
 export default function Page({ params }: { params: Promise<{ id: string }> }) {
   const [sideBarExpadend, setSideBarExpanded] = useState(true)
@@ -37,7 +38,9 @@ function LivePageContent({ id }: { id: string }) {
 function LeftSide({ id }: { id: string }) {
   return (
     <div className="flex flex-1 flex-col">
-      <VideoPreview className="" />
+      <AspectRatio ratio={16 / 9} className="flex-1">
+        <WebRTCPlayer livestreamID={id} />
+      </AspectRatio>
       <LiveDetails id={id} />
     </div>
   )
