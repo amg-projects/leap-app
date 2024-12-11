@@ -2,7 +2,7 @@
 
 import { use, useState } from 'react'
 import { NavBar } from '../../NavBar'
-import { SideBar } from '../../SideBar'
+import { SideBar, channels } from '../../SideBar'
 import { VideoPreview } from '../../VideoPreview'
 
 export default function Page({ params }: { params: Promise<{ id: string }> }) {
@@ -46,41 +46,54 @@ function LeftSide({ id }: { id: string }) {
 function LiveDetails({ id }: { id: string }) {
   return (
     <div className="flex">
-      <ChannelImage />
+      <ChannelImage imageURL={channels[id].imageURL} />
       <div className="flex flex-col">
-        <LiveDetailsText id={id} />
+        <LiveDetailsText
+          name={channels[id].name}
+          description={channels[id].description}
+        />
       </div>
     </div>
   )
 }
 
-function ChannelImage() {
+function ChannelImage({ imageURL }: { imageURL: string }) {
   return (
     <div className="p-4">
-      <div className="size-24 rounded-full bg-[#000000]"></div>
+      <div className="size-24 overflow-hidden rounded-full bg-[#000000]">
+        <img src={imageURL} alt="oi" />
+      </div>
     </div>
   )
 }
 
-function LiveDetailsText({ id }: { id: string }) {
+function LiveDetailsText({
+  name,
+  description,
+}: {
+  name: string
+  description: string
+}) {
   return (
     <div className="flex w-full flex-col gap-2 pt-6 text-black">
-      <div className="text-xl font-bold">Channel ID = {id}</div>
+      <div className="text-xl font-bold"> {name} </div>
       <div className="flex justify-between gap-2 pr-4">
-        <DescriptionSection />
+        <DescriptionSection description={description} />
         <ButtonsSection />
       </div>
     </div>
   )
 }
 
-function DescriptionSection() {
+type DescriptionSectionProps = {
+  description: string
+}
+
+function DescriptionSection(props: DescriptionSectionProps) {
+  const description = props.description
   return (
     <div className="flex items-center">
-      <div className="text-xl font-bold">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa Lorem amet
-        consectetur adipisicing elit. Ipsa Loremasdfa.
-      </div>
+      <div className="text-xl font-bold">{description}</div>
     </div>
   )
 }
