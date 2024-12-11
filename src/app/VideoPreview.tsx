@@ -1,12 +1,12 @@
-import { WebRTCPlayer } from '@/components/WebRTCPlayer'
+import { AspectRatio } from '@/components/ui/aspect-ratio'
 
 export function VideoPreview({ className }: { className?: string }) {
   console.log('VideoPreview render')
   return (
-    <div
-      className={`aspect-video rounded-2xl bg-[#c7d6cc] shadow-lg ${className}`}
-    >
-      <WebRTCPlayer streamId="not-implemented" />
-    </div>
+    <AspectRatio ratio={16 / 9} className={className}>
+      <div
+        className={`aspect-video overflow-hidden rounded-2xl bg-[#c7d6cc] shadow-lg dark:bg-background`}
+      />
+    </AspectRatio>
   )
 }

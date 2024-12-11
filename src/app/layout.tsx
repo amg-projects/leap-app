@@ -1,7 +1,9 @@
 import type { Metadata } from 'next'
-import localFont from 'next/font/local'
+import { ThemeProvider } from '@/components/theme-provider'
+import '@xyflow/react/dist/style.css'
 import './globals.css'
 
+import localFont from 'next/font/local'
 import '@fontsource/roboto/300.css'
 import '@fontsource/roboto/400.css'
 import '@fontsource/roboto/500.css'
@@ -29,11 +31,18 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   )

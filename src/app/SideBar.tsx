@@ -8,8 +8,8 @@ type SideBarProps = {
 
 export function SideBar(props: SideBarProps) {
   return (
-    <div className="z-10 flex min-w-14 flex-1 flex-col items-center bg-white shadow-[10px_-10px_10px_-10px_rgba(0,0,0,0.2)]">
-      <div className="flex flex-col gap-5 text-black">
+    <div className="z-10 flex min-w-14 flex-1 flex-col items-center bg-background text-foreground shadow-[10px_-10px_10px_-10px_rgba(0,0,0,0.2)]">
+      <div className="flex flex-col gap-5">
         <div className="flex flex-col pt-5">
           <div
             className={`mb-2 ${props.expanded ? '' : 'hidden'} px-2 text-left font-bold`}
@@ -75,12 +75,12 @@ function ChannelExample(props: ChannelExampleProps) {
   const className = props.expanded ? '' : 'hidden'
   return (
     <div
-      className="flex cursor-pointer flex-row items-center hover:scale-[1.01] hover:bg-gray-100 hover:shadow-lg"
+      className="flex cursor-pointer flex-row items-center hover:scale-[1.01] hover:bg-secondary hover:shadow-lg"
       onClick={() => {
         accessLive(props.id)
       }}
     >
-      <div className="m-1 size-8 rounded-full bg-black"></div>
+      <div className="m-1 size-8 rounded-full bg-foreground"></div>
       <div className={`ml-1 flex-1 ${className}`}>
         <div className="flex flex-row items-center">
           <div className="flex-1">{props.name}</div>
