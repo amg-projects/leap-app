@@ -46,6 +46,7 @@ module.exports = {
     'jsx-a11y/role-has-required-aria-props': 'warn',
     'jsx-a11y/role-supports-aria-props': 'warn',
     'react/no-unknown-property': 'error',
+    '@typescript-eslint/no-unused-vars': 'warn',
   },
   settings: {
     react: {
