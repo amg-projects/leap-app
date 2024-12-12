@@ -2,15 +2,11 @@
 
 // Credits: https://github.com/Glimesh/broadcast-box/blob/main/web/src/components/player/index.js
 import dynamic from 'next/dynamic'
-import { createRef, useEffect, useState } from 'react'
-
-const whepAPIUrl = 'http://187.21.161.185:6060/whep'
+import React, { useEffect, useState } from 'react'
 
 export const WebRTCPlayer = dynamic(() => Promise.resolve(WebRTCPlayerImpl), {
   ssr: false,
 })
-
-const peerConnectionCache = new Map<string, RTCPeerConnection>()
 
 const pcConfig: RTCConfiguration = {
   iceServers: [
@@ -25,82 +21,128 @@ const pcConfig: RTCConfiguration = {
   ],
 }
 
-function useRTCVideo(streamId: string) {
-  const [mediaStream, setMediaStream] = useState<MediaStream | null>(null)
+function WebRTCPlayerImpl({
+  livestreamID,
+}: {
+  livestreamID: string
+}): JSX.Element {
+  const videoRef = React.createRef<HTMLVideoElement>()
+  const [videoLayers] = useState<string[]>([])
+  const [mediaSrcObject, setMediaSrcObject] = useState<MediaStream | null>(null)
+  const [layerEndpoint] = useState<string>('')
+
+  const onLayerChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    fetch(layerEndpoint, {
+      method: 'POST',
+      body: JSON.stringify({ mediaId: '1', encodingId: event.target.value }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+  }
 
   useEffect(() => {
-    const firstTime = !peerConnectionCache.has(streamId)
-    const peerConnection =
-      peerConnectionCache.get(streamId) || new RTCPeerConnection(pcConfig)
-    peerConnectionCache.set(streamId, peerConnection)
-
-    const oldOnTrack = peerConnection.ontrack
-    peerConnection.ontrack = function (event) {
-      setMediaStream(event.streams[0])
-      if (oldOnTrack) {
-        oldOnTrack(event)
-      }
+    if (videoRef.current) {
+      videoRef.current.srcObject = mediaSrcObject
+      setTimeout(() => {
+        if (videoRef.current) {
+          videoRef.current.muted = false
+        }
+      }, 5000)
     }
+  }, [mediaSrcObject, videoRef])
 
-    if (!firstTime) {
-      return
+  useEffect(() => {
+    const peerConnection = new RTCPeerConnection(pcConfig)
+
+    peerConnection.ontrack = (event) => {
+      setMediaSrcObject(event.streams[0])
     }
 
     peerConnection.addTransceiver('audio', { direction: 'recvonly' })
     peerConnection.addTransceiver('video', { direction: 'recvonly' })
 
     peerConnection.createOffer().then((offer) => {
+      if (!offer.sdp) {
+        return
+      }
+      offer.sdp = offer.sdp.replace('useinbandfec=1', 'useinbandfec=1;stereo=1')
       peerConnection.setLocalDescription(offer)
 
-      fetch(whepAPIUrl, {
+      fetch(`/api/whep/${livestreamID}`, {
         method: 'POST',
         body: offer.sdp,
         headers: {
-          // Authorization: `Bearer ${streamId}`,
-          Authorization: `Bearer none`,
+          Authorization: `Bearer ${location.pathname.split('/').pop()}`,
           'Content-Type': 'application/sdp',
         },
       })
-        .then(async (response) => {
-          peerConnection
-            .setRemoteDescription({
-              sdp: await response.text(),
-              type: 'answer',
-            })
-            .catch((err) => {
-              // Reload the page if the connection fails
-              console.dir(err)
-              setTimeout(() => window.location.reload(), 1000)
-            })
+        .then(async (r) => {
+          // const parsedLinkHeader = parseLinkHeader(r.headers.get('Link') || '')
+          // setLayerEndpoint(
+          //   `${window.location.protocol}//${parsedLinkHeader['urn:ietf:params:whep:ext:core:layer'].url}`,
+          // )
+
+          // const evtSource = new EventSource(
+          //   `${window.location.protocol}//${parsedLinkHeader['urn:ietf:params:whep:ext:core:server-sent-events'].url}`,
+          // )
+          // evtSource.onerror = () => evtSource.close()
+
+          // evtSource.addEventListener('layers', (event: MessageEvent) => {
+          //   const parsed = JSON.parse(event.data)
+          //   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          //   setVideoLayers(parsed['1'].layers.map((l: any) => l.encodingId))
+          // })
+
+          const answer = await r.text()
+          if (!r.status.toString().startsWith('2')) {
+            throw new Error(`Server error: ${r.status}: ${answer}`)
+          }
+          return answer
         })
-        .catch((err) => {
-          console.dir(err)
+        .then((answer) => {
+          peerConnection.setRemoteDescription({
+            sdp: answer,
+            type: 'answer',
+          })
+        })
+        .catch((e) => {
+          console.error(e)
         })
     })
 
     return () => {
       peerConnection.close()
-      peerConnectionCache.delete(streamId)
     }
-  }, [streamId])
-
-  return { mediaStream }
-}
-
-function WebRTCPlayerImpl({ streamId }: { streamId: string }) {
-  const { mediaStream } = useRTCVideo(streamId)
-  const videoRef = createRef<HTMLVideoElement>()
-
-  useEffect(() => {
-    if (videoRef.current) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      ;(videoRef.current as any).srcObject = mediaStream
-    }
-  }, [videoRef, mediaStream])
+  }, [location.pathname])
 
   return (
     <>
-      <video ref={videoRef} autoPlay muted className={`w-full bg-black`} />
+      <video
+        ref={videoRef}
+        autoPlay
+        muted
+        controls
+        playsInline
+        className={`w-full bg-black`}
+      />
+
+      {videoLayers.length >= 2 && (
+        <select
+          defaultValue="disabled"
+          onChange={onLayerChange}
+          className="focus:shadow-outline w-full appearance-none rounded border border-gray-700 bg-gray-700 px-3 py-2 leading-tight text-white shadow-md placeholder:text-gray-200 focus:outline-none"
+        >
+          <option value="disabled" disabled>
+            Choose Quality Level
+          </option>
+          {videoLayers.map((layer) => (
+            <option key={layer} value={layer}>
+              {layer}
+            </option>
+          ))}
+        </select>
+      )}
     </>
   )
 }

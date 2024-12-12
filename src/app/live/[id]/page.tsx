@@ -3,7 +3,8 @@
 import { use, useState } from 'react'
 import { NavBar } from '../../NavBar'
 import { SideBar, channels } from '../../SideBar'
-import { VideoPreview } from '../../VideoPreview'
+import { AspectRatio } from '@/components/ui/aspect-ratio'
+import { WebRTCPlayer } from '@/components/WebRTCPlayer'
 
 export default function Page({ params }: { params: Promise<{ id: string }> }) {
   const [sideBarExpadend, setSideBarExpanded] = useState(true)
@@ -27,7 +28,7 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
 
 function LivePageContent({ id }: { id: string }) {
   return (
-    <div className="flex flex-1 gap-9 bg-[#F0FFF5] pl-9 pr-16 pt-8">
+    <div className="flex flex-1 gap-9 bg-background pl-9 pr-16 pt-8 shadow-inner ">
       <LeftSide id={id} />
       <RightSide />
     </div>
@@ -37,7 +38,9 @@ function LivePageContent({ id }: { id: string }) {
 function LeftSide({ id }: { id: string }) {
   return (
     <div className="flex flex-1 flex-col">
-      <VideoPreview className="" />
+      <AspectRatio ratio={16 / 9} className="flex-1">
+        <WebRTCPlayer livestreamID={id} />
+      </AspectRatio>
       <LiveDetails id={id} />
     </div>
   )
@@ -60,7 +63,7 @@ function LiveDetails({ id }: { id: string }) {
 function ChannelImage({ imageURL }: { imageURL: string }) {
   return (
     <div className="p-4">
-      <div className="size-24 overflow-hidden rounded-full bg-[#000000]">
+      <div className="size-24 overflow-hidden rounded-full bg-foreground">
         <img src={imageURL} alt="oi" />
       </div>
     </div>
@@ -75,7 +78,7 @@ function LiveDetailsText({
   description: string
 }) {
   return (
-    <div className="flex w-full flex-col gap-2 pt-6 text-black">
+    <div className="flex w-full flex-col gap-2 pt-6 text-foreground">
       <div className="text-xl font-bold"> {name} </div>
       <div className="flex justify-between gap-2 pr-4">
         <DescriptionSection description={description} />
@@ -101,13 +104,13 @@ function DescriptionSection(props: DescriptionSectionProps) {
 function ButtonsSection() {
   return (
     <div className="flex gap-2 ">
-      <div className="size-10 rounded-full bg-[#F0FFF5] p-1 text-center text-white"></div>
-      <div className="size-10 rounded-full bg-[#F0FFF5] p-1 text-center text-white"></div>
-      <div className="h-10 w-28 rounded-2xl bg-[#F0FFF5] p-1 px-2 text-center text-white"></div>
+      <div className="size-10 rounded-full bg-accent-foreground p-1 text-center text-foreground"></div>
+      <div className="size-10 rounded-full bg-accent-foreground p-1 text-center text-foreground"></div>
+      <div className="h-10 w-28 rounded-2xl bg-accent-foreground p-1 px-2 text-center text-foreground"></div>
     </div>
   )
 }
 
 function RightSide() {
-  return <div className="mb-32 max-w-96 flex-1 rounded-2xl bg-[#c7d6cc]"></div>
+  return <div className="mb-32 max-w-96 flex-1 rounded-2xl bg-secondary"></div>
 }
