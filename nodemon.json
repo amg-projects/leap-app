@@ -1,0 +1,11 @@
+{
+  "restartable": "rs",
+  "ignore": [
+    "src/**/generated/*"
+  ],
+  "verbose": true,
+  "watch": [
+    "src/**/*"
+  ],
+  "ext": "js,json,proto,ts,tsx,jsx"
+}

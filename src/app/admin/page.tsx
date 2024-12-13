@@ -10,24 +10,18 @@ import {
   Position,
   ReactFlow,
 } from '@xyflow/react'
+import { useEffect, useState } from 'react'
+import { tickMocks } from './mock-reports'
+import { DSFUReport } from '@/lib/protos/ts/report'
 
 type Streamer = {
+  id: string
   name: string
   type: 'streamer'
 }
 
-type DLivestream = {
-  streamerName: Streamer['name']
-  viewers: number
-}
-
-type DSFU = {
-  name: string
-  type: 'dsfu'
-  streams: DLivestream[]
-}
-
 type ViewerCluster = {
+  id: string
   name: string
   type: 'viewerCluster'
 }
@@ -38,32 +32,53 @@ const accums = {
   viewerCluster: 0,
 }
 
-const X_STEP = 400
+const X_STEP = 700
 const knownNodes: Record<string, Node> = {}
 
-function createNode(origin: Streamer | DSFU | ViewerCluster): Node {
-  const id = origin.name
+function createNode(origin: Streamer | DSFUReport | ViewerCluster): Node {
+  let id
+  if ('nodeID' in origin) {
+    id = origin.nodeID
+  } else {
+    id = origin.id
+  }
+
+  let name
+  if ('name' in origin) {
+    name = origin.name
+  } else {
+    name = origin.nodeID
+  }
+
   if (knownNodes[id]) {
     return knownNodes[id]
   }
+
+  let type: 'streamer' | 'dsfu' | 'viewerCluster'
+  if ('type' in origin) {
+    type = origin.type
+  } else {
+    type = 'dsfu'
+  }
+
   let x
-  if (origin.type === 'streamer') {
+  if (type === 'streamer') {
     x = 50
-  } else if (origin.type === 'dsfu') {
+  } else if (type === 'dsfu') {
     x = 50 + X_STEP
   } else {
     x = 50 + X_STEP * 2
   }
 
-  accums[origin.type] += 1
-  const accum = accums[origin.type]
-  const y = accum * 100
+  accums[type] += 1
+  const accum = accums[type]
+  const y = accum * 150
 
   const node: Node = {
     data: {
-      label: `<${origin.type}> ${origin.name}`,
+      label: `<${type}> ${name}`,
     },
-    id: origin.name,
+    id,
     position: {
       x,
       y,
@@ -73,46 +88,61 @@ function createNode(origin: Streamer | DSFU | ViewerCluster): Node {
       color: 'black',
     },
     type: 'customNode',
+    zIndex: Math.floor(Math.random() * 100),
   }
   knownNodes[id] = node
   return node
 }
 
 type PreNodes = {
-  streamers: Streamer[]
-  dsfus: DSFU[]
-  viewerClusters: ViewerCluster[]
+  streamers: (Streamer & DSFUReport['livestreams'][number])[]
+  dsfus: DSFUReport[]
+  viewerClusters: (ViewerCluster & DSFUReport['livestreams'][number])[]
 }
 
-function createPreNodes(dsfu: DSFU): {
+function createPreNodes(report: DSFUReport): {
   preNodes: PreNodes
   edges: Edge[]
 } {
   const preNodes: PreNodes = {
-    streamers: dsfu.streams.map((stream) => ({
+    streamers: report.livestreams.map((stream) => ({
+      ...stream,
       type: 'streamer',
-      name: stream.streamerName,
+      id: stream.spec?.streamerID ?? 'unknown',
+      name: stream.spec?.streamerID ?? 'unknown',
     })),
-    dsfus: [dsfu],
-    viewerClusters: dsfu.streams.map((stream) => ({
+    dsfus: [{ ...report }],
+    viewerClusters: report.livestreams.map((stream) => ({
+      ...stream,
       type: 'viewerCluster',
-      name: `${stream.streamerName}:${dsfu.name}-viewers`,
+      id: `${stream.spec?.streamerID}:${report.nodeID}-viewers`,
+      name: `${stream.spec?.streamerID}:${report.nodeID}-viewers`,
     })),
   }
 
   const streamerEdges: Edge[] = preNodes.streamers.map((streamer) => ({
-    id: `${streamer.name}-${dsfu.name}`,
+    id: `${streamer.name}-${report.nodeID}`,
     source: streamer.name,
-    target: dsfu.name,
+    target: report.nodeID,
     animated: true,
+    label: streamer.stats?.bytesReceived.toFixed(2) + ' MB',
   }))
 
   const viewerClusterEdges: Edge[] = preNodes.viewerClusters.map(
     (viewerCluster) => ({
-      id: `${viewerCluster.name}-${dsfu.name}`,
-      source: dsfu.name,
-      target: viewerCluster.name,
+      id: `${viewerCluster.name}-${report.nodeID}`,
+      source: report.nodeID,
+      target: viewerCluster.id,
       animated: true,
+      label:
+        viewerCluster.stats?.bytesSent.toFixed(2) +
+        ' MB (quality: ' +
+        viewerCluster.stats?.quality.toFixed(2) * 100 +
+        '%, uptime: ' +
+        viewerCluster.stats?.uptime.toFixed(0) +
+        's, viewers: ' +
+        viewerCluster.spec?.viewerIDs.length +
+        ')',
     }),
   )
 
@@ -123,26 +153,7 @@ function createPreNodes(dsfu: DSFU): {
 }
 
 export default function AdminPage() {
-  const dsfus: DSFU[] = [
-    {
-      type: 'dsfu',
-      name: 'marucs-dsfu-1',
-      streams: [
-        { streamerName: 'Marucs', viewers: 1 },
-        { streamerName: 'Juninho', viewers: 5 },
-      ],
-    },
-    {
-      type: 'dsfu',
-      name: 'marucs-dsfu-2',
-      streams: [{ streamerName: 'Gary', viewers: 2 }],
-    },
-    {
-      type: 'dsfu',
-      name: 'anonymous-dsfu-1',
-      streams: [{ streamerName: 'Juninho', viewers: 2 }],
-    },
-  ]
+  const [dsfus, setDsfus] = useState<DSFUReport[]>([])
 
   const results = dsfus.map(createPreNodes)
   const edges = results.map((result) => result.edges).flat()
@@ -171,6 +182,16 @@ export default function AdminPage() {
     customNode: CustomNode,
   }
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setDsfus(tickMocks())
+    }, 1000)
+
+    return () => {
+      clearInterval(interval)
+    }
+  }, [])
+
   return (
     <div className="h-screen w-screen ">
       <div
@@ -179,7 +200,6 @@ export default function AdminPage() {
           height: '100%',
         }}
       >
-        {nodes.length}
         <ReactFlow nodes={nodes} nodeTypes={nodeTypes} edges={edges}>
           <Background />
           <Controls />
