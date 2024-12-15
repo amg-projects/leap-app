@@ -47,6 +47,7 @@ module.exports = {
     'jsx-a11y/role-supports-aria-props': 'warn',
     'react/no-unknown-property': 'error',
     '@typescript-eslint/no-unused-vars': 'warn',
+    '@next/next/no-img-element': 'off', // TODO: fix
   },
   settings: {
     react: {

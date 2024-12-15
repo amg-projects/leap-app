@@ -36,11 +36,11 @@ export const channels: Record<string, Channel> = {
   '3': {
     id: '3',
     name: 'Channel 3',
-    description: 'qualquer',
-    category: 'qualquer',
-    liveCount: '1k',
+    description: 'VENEZA',
+    category: 'IRL',
+    liveCount: '1.000k',
     imageURL:
-      'https://media.discordapp.net/attachments/344659242000580621/1301363143230095441/New_Project_1.png?ex=675a41df&is=6758f05f&hm=e44219996d7e6da3d77daacb461614e579e1e351a9f32f9d5cb36cb4dce4d5ca&=&format=webp&quality=lossless&width=797&height=671',
+      'https://static.nationalgeographicbrasil.com/files/styles/image_3200/public/nationalgeographic2743988.webp?w=1600&h=900',
   },
   '4': {
     id: '4',
@@ -48,14 +48,13 @@ export const channels: Record<string, Channel> = {
     description: 'qualquer',
     category: 'IRL',
     liveCount: '2k',
-    imageURL:
-      'https://media.discordapp.net/attachments/344659242000580621/1301363143230095441/New_Project_1.png?ex=675a41df&is=6758f05f&hm=e44219996d7e6da3d77daacb461614e579e1e351a9f32f9d5cb36cb4dce4d5ca&=&format=webp&quality=lossless&width=797&height=671',
+    imageURL: 'https://static.preparaenem.com/2024/04/2-paisagem-nos-alpes.jpg',
   },
 }
 
 const recommendedIds = ['0', '4']
 
-const followedIds = ['1', '2', '4']
+const followedIds = ['1', '2', '3']
 
 export function SideBar(props: SideBarProps) {
   return (

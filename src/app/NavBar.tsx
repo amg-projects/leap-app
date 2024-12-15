@@ -42,17 +42,13 @@ function Logo() {
       onClick={() => accessHome()}
     >
       <AspectRatio ratio={591 / 910} className="flex w-10 items-center">
-        <img
-          src="/leaplogo.png"
-          alt="logo"
-          className="animate-bounce hover:animate-spin"
-        />
+        <img src="/leaplogo.png" alt="logo" className="animate-bounce" />
       </AspectRatio>
-      <AspectRatio ratio={1479 / 458} className="-ml-2 flex w-20 items-center">
+      <AspectRatio ratio={1479 / 458} className="-ml-2  flex w-20 items-center">
         <img
-          src="/leapleap.png"
+          src="/leapytext.png"
           alt="logo"
-          className="transition-all hover:scale-105 hover:cursor-pointer"
+          className="hidden transition-all hover:scale-105 hover:cursor-pointer lg:flex"
         />
       </AspectRatio>
     </div>
