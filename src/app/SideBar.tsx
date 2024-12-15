@@ -10,6 +10,8 @@ type Channel = {
   id: string
   name: string
   description: string
+  category: string
+  liveCount: string
   imageURL: string
 }
 
@@ -18,6 +20,8 @@ export const channels: Record<string, Channel> = {
     id: '1',
     name: 'Renato 38tao',
     description: 'E ISSO OU NAO?',
+    category: 'bitcoin',
+    liveCount: '14k',
     imageURL:
       'https://m.media-amazon.com/images/S/amzn-author-media-prod/am5ok7i24vu2p15el6l540i444._SX450_CR0%2C0%2C450%2C450_.jpg',
   },
@@ -25,12 +29,16 @@ export const channels: Record<string, Channel> = {
     id: '2',
     name: 'SUPER XANDAO',
     description: '2030 E MONACO',
+    category: 'doki doki',
+    liveCount: '120k',
     imageURL: 'https://images.uncyc.org/pt/f/f5/Xand%C3%A3oMagro.jpg',
   },
   '3': {
     id: '3',
     name: 'Channel 3',
     description: 'qualquer',
+    category: 'qualquer',
+    liveCount: '1k',
     imageURL:
       'https://media.discordapp.net/attachments/344659242000580621/1301363143230095441/New_Project_1.png?ex=675a41df&is=6758f05f&hm=e44219996d7e6da3d77daacb461614e579e1e351a9f32f9d5cb36cb4dce4d5ca&=&format=webp&quality=lossless&width=797&height=671',
   },
@@ -38,6 +46,8 @@ export const channels: Record<string, Channel> = {
     id: '4',
     name: 'MC RYAN',
     description: 'qualquer',
+    category: 'IRL',
+    liveCount: '2k',
     imageURL:
       'https://media.discordapp.net/attachments/344659242000580621/1301363143230095441/New_Project_1.png?ex=675a41df&is=6758f05f&hm=e44219996d7e6da3d77daacb461614e579e1e351a9f32f9d5cb36cb4dce4d5ca&=&format=webp&quality=lossless&width=797&height=671',
   },
@@ -102,8 +112,9 @@ function ChannelExampleN(props: MultipleChannelsProps) {
         id={lastID}
         expanded={props.expanded}
         name={channels[props.channelsIds[i]].name}
-        liveCount="1.2k"
-        category="Just Chatting"
+        liveCount={channels[props.channelsIds[i]].liveCount}
+        category={channels[props.channelsIds[i]].category}
+        imageURL={channels[props.channelsIds[i]].imageURL}
       />,
     )
   }
@@ -117,6 +128,7 @@ type ChannelExampleProps = {
   name: string
   liveCount: string
   category: string
+  imageURL: string
 }
 
 function ChannelExample(props: ChannelExampleProps) {
@@ -128,7 +140,9 @@ function ChannelExample(props: ChannelExampleProps) {
         accessLive(props.id)
       }}
     >
-      <div className="m-1 size-8 rounded-full bg-foreground"></div>
+      <div className="m-1 size-8 overflow-hidden rounded-full bg-foreground">
+        <img src={props.imageURL} alt={props.name} />
+      </div>
       <div className={`ml-1 flex-1 ${className}`}>
         <div className="flex flex-row items-center">
           <div className="flex-1">{props.name}</div>
