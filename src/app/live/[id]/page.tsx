@@ -1,12 +1,11 @@
 'use client'
 
 import { use, useState } from 'react'
-import AddIcon from '@mui/icons-material/Add'
-import CheckIcon from '@mui/icons-material/Check'
 import { NavBar } from '../../NavBar'
 import { SideBar, channels } from '../../SideBar'
 import { AspectRatio } from '@/components/ui/aspect-ratio'
 import { WebRTCPlayer } from '@/components/WebRTCPlayer'
+import { ButtonsSection } from './Buttons'
 
 export default function Page({ params }: { params: Promise<{ id: string }> }) {
   const [sideBarExpadend, setSideBarExpanded] = useState(true)
@@ -99,34 +98,6 @@ function DescriptionSection(props: DescriptionSectionProps) {
   return (
     <div className="flex items-center">
       <div className="text-xl font-bold">{description}</div>
-    </div>
-  )
-}
-
-function ButtonsSection() {
-  return (
-    <div className="flex gap-2 border border-black">
-      <FollowButton />
-      <div className="size-10 rounded-full bg-accent-foreground p-1 text-center text-foreground"></div>
-      <div className="h-10 w-28 rounded-2xl bg-accent-foreground p-1 px-2 text-center text-foreground"></div>
-    </div>
-  )
-}
-
-function FollowButton() {
-  const [followed, setFollowed] = useState(false)
-  const invertFollow = function () {
-    setFollowed(!followed)
-  }
-  return (
-    <div className=" flex size-10 items-center rounded-full border border-black text-center text-foreground hover:bg-secondary">
-      <span className="mx-auto" onClick={invertFollow}>
-        {followed ? (
-          <CheckIcon fontSize="large" />
-        ) : (
-          <AddIcon fontSize="large" />
-        )}
-      </span>
     </div>
   )
 }

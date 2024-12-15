@@ -58,7 +58,7 @@ const followedIds = ['1', '2', '3']
 
 export function SideBar(props: SideBarProps) {
   return (
-    <div className="z-10 flex min-w-14 flex-1 flex-col items-center bg-background text-foreground shadow-[10px_-10px_10px_-10px_rgba(0,0,0,0.2)]">
+    <div className="z-10 flex min-w-14 flex-1 select-none flex-col items-center bg-background text-foreground shadow-[10px_-10px_10px_-10px_rgba(0,0,0,0.2)]">
       <div className="flex flex-col gap-5">
         <div className="flex flex-col pt-5">
           <div
