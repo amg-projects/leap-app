@@ -25,9 +25,9 @@ function FollowButton() {
     <div className=" flex size-10 items-center rounded-full border border-foreground/[.17] text-center hover:cursor-pointer hover:bg-secondary">
       <span className="mx-auto" onClick={invertFollow}>
         {followed ? (
-          <CheckIcon fontSize="large" />
+          <CheckIcon fontSize="medium" />
         ) : (
-          <AddIcon fontSize="large" />
+          <AddIcon fontSize="medium" />
         )}
       </span>
     </div>
@@ -42,9 +42,9 @@ function NotificationButton() {
     <div className=" flex size-10 items-center rounded-full border border-foreground/[.17] text-center hover:cursor-pointer hover:bg-secondary">
       <span className="mx-auto" onClick={invertNotification}>
         {notification ? (
-          <NotificationsActiveIcon fontSize="large" />
+          <NotificationsActiveIcon fontSize="medium" />
         ) : (
-          <NotificationsOffIcon fontSize="large" />
+          <NotificationsOffIcon fontSize="medium" />
         )}
       </span>
     </div>
@@ -57,7 +57,7 @@ function SubscribeButton() {
   }
   return (
     <div
-      className="flex h-10 w-28 select-none items-center rounded-2xl border border-foreground/[.17] font-bold hover:cursor-pointer hover:bg-secondary"
+      className="flex h-10 min-w-28 select-none items-center rounded-2xl border border-foreground/[.17] px-3 font-bold hover:cursor-pointer hover:bg-secondary"
       onClick={invertSubscribe}
     >
       <div className="mx-auto">{subscribe ? 'UNSUBSCRIBE' : 'SUBSCRIBE'}</div>

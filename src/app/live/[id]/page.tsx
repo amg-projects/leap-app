@@ -63,9 +63,12 @@ function LiveDetails({ id }: { id: string }) {
 
 function ChannelImage({ imageURL }: { imageURL: string }) {
   return (
-    <div className="p-4">
-      <div className="size-24 overflow-hidden rounded-full bg-foreground">
-        <img src={imageURL} alt="oi" />
+    <div className="relative p-4">
+      <div className="shadow-inner- size-24 overflow-hidden rounded-full">
+        <img className="size-24" src={imageURL} alt="oi" />
+      </div>
+      <div className="absolute bottom-3 w-24 rounded-xl bg-red-600 text-center font-bold tracking-widest text-white">
+        LIVE
       </div>
     </div>
   )

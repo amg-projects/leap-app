@@ -4,7 +4,6 @@ import { ModeToggle } from '@/components/ui/mode-toggle'
 import { accessHome } from './actions'
 
 import Menu from '@mui/icons-material/Menu'
-import ControlPointIcon from '@mui/icons-material/ControlPoint'
 import SearchIcon from '@mui/icons-material/Search'
 import { AspectRatio } from '@/components/ui/aspect-ratio'
 
@@ -79,8 +78,8 @@ function ButtonExtra() {
 
 function ButtonLogin() {
   return (
-    <div className="mr-10 flex h-8 w-24 flex-none items-center rounded-2xl border border-[#00000034] bg-secondary text-foreground hover:scale-105 hover:cursor-pointer hover:bg-accent ">
-      <span className="w-full text-center">Login</span>
+    <div className="mr-10 flex h-8 w-24 flex-none items-center rounded-2xl border border-[#00000034] bg-secondary text-foreground hover:cursor-pointer hover:bg-accent ">
+      <span className="w-full text-center font-semibold">Login</span>
     </div>
   )
 }
