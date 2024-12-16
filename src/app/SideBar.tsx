@@ -131,7 +131,6 @@ type ChannelExampleProps = {
 }
 
 function ChannelExample(props: ChannelExampleProps) {
-  const className = props.expanded ? '' : 'hidden'
   if (!props.expanded)
     return (
       <div
@@ -142,13 +141,6 @@ function ChannelExample(props: ChannelExampleProps) {
       >
         <div className="m-1 size-8 overflow-hidden rounded-full bg-foreground">
           <img src={props.imageURL} alt={props.name} />
-        </div>
-        <div className={`ml-1 flex-1 ${className}`}>
-          <div className="flex flex-row items-center">
-            <div className="flex-1">{props.name}</div>
-            <div className="ml-2 mr-1 text-xs">🔴 {props.liveCount}</div>
-          </div>
-          <div className="text-xs">{props.category}</div>
         </div>
       </div>
     )
@@ -163,7 +155,7 @@ function ChannelExample(props: ChannelExampleProps) {
         <div className="m-1 size-8 overflow-hidden rounded-full bg-foreground">
           <img src={props.imageURL} alt={props.name} />
         </div>
-        <div className={`ml-1 flex-1 ${className}`}>
+        <div className={`ml-1 flex-1`}>
           <div className="flex flex-row items-center">
             <div className="min-w-32 max-w-32 flex-1 overflow-hidden text-ellipsis text-nowrap">
               {props.name}

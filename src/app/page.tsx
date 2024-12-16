@@ -25,11 +25,11 @@ function Recomendations() {
   return (
     <div className="flex-1 overflow-auto bg-background pt-20 text-black">
       <AfilliateRecomendations />
-      <hr className="my-4" />
+      <hr className="my-10 border border-[#dadada]" />
       <CategoryRecomendations category="You will like" />
-      <hr className="my-4" />
+      <hr className="my-10 border border-[#dadada]" />
       <CategoryRecomendations category="FPS" />
-      <hr className="my-4" />
+      <hr className="my-10 border border-[#dadada]" />
       <CategoryRecomendations category="IRL" />
     </div>
   )
@@ -75,11 +75,14 @@ function CategoryRecomendations({ category }: { category: string }) {
   ))
 
   return (
-    <div className="flex flex-col px-12 lg:px-24">
-      <h1 className="font-bold ">{category}</h1>
-      <div className="grid flex-1 grid-flow-col grid-rows-2 items-center gap-5 ">
+    <div className="flex flex-col gap-3">
+      <h1 className="mx-12 font-bold tracking-wide lg:mx-24">
+        {category.toUpperCase()}
+      </h1>
+      <div className="mx-12 grid flex-1 grid-flow-col grid-rows-2 items-center gap-5 lg:mx-24">
         {videos}
       </div>
+      <h1 className="mx-12 font-bold tracking-wide opacity-0 lg:mx-24">.</h1>
     </div>
   )
 }
