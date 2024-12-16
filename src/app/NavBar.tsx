@@ -57,11 +57,11 @@ function Logo() {
 
 function SearchBar() {
   return (
-    <div className="hidden h-8 w-[200px] flex-auto overflow-hidden text-clip rounded-2xl border border-[#00000028] bg-secondary text-foreground lg:flex">
+    <div className="hidden h-8 w-[200px] flex-auto overflow-hidden text-clip rounded-2xl border border-[#00000028] bg-secondary text-foreground transition-all hover:scale-105 hover:cursor-pointer lg:flex">
       <input
         type="text"
         placeholder="Search on Leap"
-        className="w-full rounded-l-full bg-transparent px-4 text-foreground"
+        className="w-full rounded-l-full bg-transparent px-4 text-foreground focus:outline-none"
       />
       <div className="w-10 bg-[#00000017] pt-1 text-center text-foreground">
         <SearchIcon />
