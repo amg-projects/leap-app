@@ -25,9 +25,9 @@ export const channels: Record<string, Channel> = {
     imageURL:
       'https://m.media-amazon.com/images/S/amzn-author-media-prod/am5ok7i24vu2p15el6l540i444._SX450_CR0%2C0%2C450%2C450_.jpg',
   },
-  '2': {
-    id: '2',
-    name: 'SUPER XANDAO',
+  SUPERXANDAO: {
+    id: 'SUPERXANDAO',
+    name: 'SUPER XANDAO FRUTO DE UMA VONTADE DIVINA, FUI ENVIADO À TERRA COM O OBJETIVO DE SALVAR A HUMANIDADE DO PECADO MORTAL NO ÚLTIMO DIA DESTA EXISTÊNCIA. PORÉM, APENAS OS CAMPEÕES DE ESPÍRITO SERÃO SALVOS POR XANDÃO. SIGA-ME E IREMOS TRILHAR JUNTOS O CAMINHO DOS CAMPEÕES.',
     description: '2030 E MONACO',
     category: 'doki doki',
     liveCount: '120k',
@@ -38,7 +38,7 @@ export const channels: Record<string, Channel> = {
     name: 'Channel 3',
     description: 'VENEZA',
     category: 'IRL',
-    liveCount: '1.000k',
+    liveCount: '1M',
     imageURL:
       'https://static.nationalgeographicbrasil.com/files/styles/image_3200/public/nationalgeographic2743988.webp?w=1600&h=900',
   },
@@ -165,8 +165,13 @@ function ChannelExample(props: ChannelExampleProps) {
         </div>
         <div className={`ml-1 flex-1 ${className}`}>
           <div className="flex flex-row items-center">
-            <div className="flex-1">{props.name}</div>
-            <div className="ml-2 mr-1 text-xs">🔴 {props.liveCount}</div>
+            <div className="min-w-32 max-w-32 flex-1 overflow-hidden text-ellipsis text-nowrap">
+              {props.name}
+            </div>
+            <div className="flex w-12 max-w-14 items-center justify-between">
+              <div className="text-[0.65rem]">🔴</div>
+              <div className=" text-[0.85rem]">{props.liveCount}</div>
+            </div>
           </div>
           <div className="text-xs">{props.category}</div>
         </div>
