@@ -132,23 +132,44 @@ type ChannelExampleProps = {
 
 function ChannelExample(props: ChannelExampleProps) {
   const className = props.expanded ? '' : 'hidden'
-  return (
-    <div
-      className="flex cursor-pointer flex-row items-center hover:scale-[1.01] hover:bg-secondary hover:shadow-lg"
-      onClick={() => {
-        accessLive(props.id)
-      }}
-    >
-      <div className="m-1 size-8 overflow-hidden rounded-full bg-foreground">
-        <img src={props.imageURL} alt={props.name} />
-      </div>
-      <div className={`ml-1 flex-1 ${className}`}>
-        <div className="flex flex-row items-center">
-          <div className="flex-1">{props.name}</div>
-          <div className="ml-2 mr-1 text-xs">🔴 {props.liveCount}</div>
+  if (!props.expanded)
+    return (
+      <div
+        className="flex cursor-pointer flex-row items-center hover:scale-[1.20] hover:rounded-full hover:bg-secondary hover:shadow-lg"
+        onClick={() => {
+          accessLive(props.id)
+        }}
+      >
+        <div className="m-1 size-8 overflow-hidden rounded-full bg-foreground">
+          <img src={props.imageURL} alt={props.name} />
         </div>
-        <div className="text-xs">{props.category}</div>
+        <div className={`ml-1 flex-1 ${className}`}>
+          <div className="flex flex-row items-center">
+            <div className="flex-1">{props.name}</div>
+            <div className="ml-2 mr-1 text-xs">🔴 {props.liveCount}</div>
+          </div>
+          <div className="text-xs">{props.category}</div>
+        </div>
       </div>
-    </div>
-  )
+    )
+  else
+    return (
+      <div
+        className="hover:roudend-lg flex cursor-pointer flex-row items-center px-1 hover:scale-[1.01] hover:bg-secondary hover:shadow-lg"
+        onClick={() => {
+          accessLive(props.id)
+        }}
+      >
+        <div className="m-1 size-8 overflow-hidden rounded-full bg-foreground">
+          <img src={props.imageURL} alt={props.name} />
+        </div>
+        <div className={`ml-1 flex-1 ${className}`}>
+          <div className="flex flex-row items-center">
+            <div className="flex-1">{props.name}</div>
+            <div className="ml-2 mr-1 text-xs">🔴 {props.liveCount}</div>
+          </div>
+          <div className="text-xs">{props.category}</div>
+        </div>
+      </div>
+    )
 }
