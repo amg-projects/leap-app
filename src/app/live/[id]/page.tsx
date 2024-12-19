@@ -7,10 +7,12 @@ import { AspectRatio } from '@/components/ui/aspect-ratio'
 import { WebRTCPlayer } from '@/components/WebRTCPlayer'
 import { ButtonsSection } from './Buttons'
 
-export default function Page({ params }: { params: Promise<{ id: string }> }) {
+type PageProps = { params: Promise<{ id: string }> }
+
+export default function Page(props: PageProps) {
   const [sideBarExpadend, setSideBarExpanded] = useState(true)
 
-  const { id } = use(params)
+  const { id } = use(props.params)
 
   return (
     <div className="flex min-h-screen flex-col ">
