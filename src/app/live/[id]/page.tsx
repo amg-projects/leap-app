@@ -13,7 +13,7 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params)
 
   return (
-    <div className="flex h-screen flex-col overflow-hidden">
+    <div className="flex min-h-screen flex-col ">
       <NavBar onSideBarToggle={() => setSideBarExpanded(!sideBarExpadend)} />
       <div className="flex h-screen flex-1 flex-row">
         <div className="flex flex-col overflow-auto">
@@ -43,6 +43,7 @@ function LeftSide({ id }: { id: string }) {
         <WebRTCPlayer livestreamID={id} />
       </AspectRatio>
       <LiveDetails id={id} />
+      <LivePannels id={id} />
     </div>
   )
 }
@@ -56,6 +57,41 @@ function LiveDetails({ id }: { id: string }) {
           name={channels[id].name}
           description={channels[id].description}
         />
+      </div>
+    </div>
+  )
+}
+
+function Pannel({ id, npannel }: { id: string; npannel: number }) {
+  return (
+    <div>
+      <div className="text-2xl font-bold">
+        {channels[id].pannels[npannel]?.title}
+      </div>
+      <div>
+        <a href={channels[id].pannels[npannel]?.redirect}>
+          <img
+            src={channels[id].pannels[npannel]?.imageURL}
+            alt={channels[id].pannels[npannel]?.alt}
+          />
+        </a>
+      </div>
+      <div className="">{channels[id].pannels[npannel]?.description}</div>
+    </div>
+  )
+}
+
+function LivePannels({ id }: { id: string }) {
+  return (
+    <div className="flex h-96 ">
+      <div className="m-5 flex flex-1 flex-col ">
+        <Pannel id={id} npannel={0} />
+      </div>
+      <div className="m-5 flex flex-1 flex-col">
+        <Pannel id={id} npannel={1} />
+      </div>
+      <div className="m-5 flex flex-1 flex-col">
+        <Pannel id={id} npannel={2} />
       </div>
     </div>
   )
