@@ -48,6 +48,8 @@ module.exports = {
     'react/no-unknown-property': 'error',
     '@typescript-eslint/no-unused-vars': 'warn',
     '@next/next/no-img-element': 'off', // TODO: fix
+    '@typescript-eslint/dot-notation': 'off',
+    'dot-notation': 'off',
   },
   settings: {
     react: {
