@@ -53,11 +53,11 @@ function LeftSide({ id }: { id: string }) {
 function LiveDetails({ id }: { id: string }) {
   return (
     <div className="flex">
-      <ChannelImage imageURL={channels[id].imageURL} />
+      <ChannelImage imageURL={channels[id]?.imageURL} />
       <div className="flex flex-1 flex-col">
         <LiveDetailsText
-          name={channels[id].name}
-          description={channels[id].description}
+          name={channels[id]?.name}
+          description={channels[id]?.description}
         />
       </div>
     </div>
@@ -68,17 +68,17 @@ function Pannel({ id, npannel }: { id: string; npannel: number }) {
   return (
     <div>
       <div className="text-2xl font-bold">
-        {channels[id].pannels[npannel]?.title}
+        {channels[id]?.pannels?.[npannel]?.title}
       </div>
       <div>
-        <a href={channels[id].pannels[npannel]?.redirect}>
+        <a href={channels[id]?.pannels?.[npannel]?.redirect}>
           <img
-            src={channels[id].pannels[npannel]?.imageURL}
-            alt={channels[id].pannels[npannel]?.alt}
+            src={channels[id]?.pannels?.[npannel]?.imageURL}
+            alt={channels[id]?.pannels?.[npannel]?.alt}
           />
         </a>
       </div>
-      <div className="">{channels[id].pannels[npannel]?.description}</div>
+      <div className="">{channels[id]?.pannels?.[npannel]?.description}</div>
     </div>
   )
 }
