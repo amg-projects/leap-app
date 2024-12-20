@@ -5,6 +5,7 @@ import { accessHome } from './actions'
 
 import Menu from '@mui/icons-material/Menu'
 import SearchIcon from '@mui/icons-material/Search'
+import { AspectRatio } from '@/components/ui/aspect-ratio'
 
 export function NavBar({ onSideBarToggle }: { onSideBarToggle: () => void }) {
   return (
@@ -37,19 +38,30 @@ function ExpandButton({ onSideBarToggle }: { onSideBarToggle: () => void }) {
 function Logo() {
   return (
     <div
-      className="ml-10 h-8 w-24 flex-none rounded-2xl bg-[#676767]"
+      className="ml-10 flex h-8 w-28 flex-none items-center hover:cursor-pointer"
       onClick={() => accessHome()}
-    ></div>
+    >
+      <AspectRatio ratio={591 / 910} className="flex w-10 items-center">
+        <img src="/leaplogo.png" alt="logo" className="animate-bounce" />
+      </AspectRatio>
+      <AspectRatio ratio={1479 / 458} className="-ml-2  flex w-20 items-center">
+        <img
+          src="/leapytext.png"
+          alt="logo"
+          className="hidden transition-all hover:scale-105 hover:cursor-pointer lg:flex"
+        />
+      </AspectRatio>
+    </div>
   )
 }
 
 function SearchBar() {
   return (
-    <div className="hidden h-8 w-[200px] flex-auto overflow-hidden text-clip rounded-2xl border border-[#00000028] bg-secondary text-foreground lg:flex">
+    <div className="hidden h-8 w-[200px] flex-auto overflow-hidden text-clip rounded-2xl border border-[#00000028] bg-secondary text-foreground transition-all hover:scale-105 hover:cursor-pointer lg:flex">
       <input
         type="text"
         placeholder="Search on Leap"
-        className="w-full rounded-l-full bg-transparent px-4 text-foreground"
+        className="w-full rounded-l-full bg-transparent px-4 text-foreground focus:outline-none"
       />
       <div className="w-10 bg-[#00000017] pt-1 text-center text-foreground">
         <SearchIcon />
@@ -66,8 +78,8 @@ function ButtonExtra() {
 
 function ButtonLogin() {
   return (
-    <div className="mr-10 flex h-8 w-24 flex-none items-center rounded-2xl border border-[#00000034] bg-secondary text-foreground hover:scale-105 hover:cursor-pointer hover:bg-accent ">
-      <span className="w-full text-center">Login</span>
+    <div className="mr-10 flex h-8 w-24 flex-none items-center rounded-2xl border border-[#00000034] bg-secondary text-foreground hover:cursor-pointer hover:bg-accent ">
+      <span className="w-full text-center font-semibold">Login</span>
     </div>
   )
 }

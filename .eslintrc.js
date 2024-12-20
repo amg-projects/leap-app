@@ -47,6 +47,18 @@ module.exports = {
     'jsx-a11y/role-supports-aria-props': 'warn',
     'react/no-unknown-property': 'error',
     '@typescript-eslint/no-unused-vars': 'warn',
+    '@next/next/no-img-element': 'off', // TODO: fix
+    '@typescript-eslint/dot-notation': 'off',
+    'dot-notation': 'off',
+    // Disallow the use of enums: https://youtu.be/jjMbPt_H3RQ
+    'no-restricted-syntax': [
+      'error',
+      {
+        selector: 'TSEnumDeclaration',
+        message:
+          'Use a union type instead. (e.g. `type MyType = "value1" | "value2"`)',
+      },
+    ],
   },
   settings: {
     react: {

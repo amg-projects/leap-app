@@ -1,3 +1,4 @@
+import '@total-typescript/ts-reset'
 import type { Metadata } from 'next'
 import { ThemeProvider } from '@/components/theme-provider'
 import '@xyflow/react/dist/style.css'

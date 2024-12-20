@@ -117,7 +117,7 @@ function WebRTCPlayerImpl({
   }, [location.pathname])
 
   return (
-    <>
+    <div className="overflow-hidden rounded-3xl">
       <video
         ref={videoRef}
         autoPlay
@@ -143,6 +143,6 @@ function WebRTCPlayerImpl({
           ))}
         </select>
       )}
-    </>
+    </div>
   )
 }
